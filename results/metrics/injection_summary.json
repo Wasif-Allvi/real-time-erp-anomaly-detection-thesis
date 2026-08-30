@@ -1,0 +1,18 @@
+{
+  "n_inject": 339,
+  "successful": {
+    "control_flow": 66,
+    "data": 68,
+    "resource": 67,
+    "temporal": 67,
+    "cross_entity": 25
+  },
+  "failed": {
+    "cross_entity": 42,
+    "control_flow": 2,
+    "resource": 1,
+    "temporal": 1
+  },
+  "anomaly_rate": 8.64306784660767,
+  "total_sequences": 22238
+}

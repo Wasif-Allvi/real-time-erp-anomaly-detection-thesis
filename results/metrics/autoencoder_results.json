@@ -1,0 +1,39 @@
+{
+  "roc_auc": 0.6300787810010655,
+  "auprc": 0.3402795861657817,
+  "auprc_random_baseline": 0.09038582606349492,
+  "best_f1": 0.331947066294503,
+  "threshold": 0.0029186352621763945,
+  "precision_at_threshold": 0.6908517350157729,
+  "recall_at_threshold": 0.21791044776119403,
+  "normal_mean": 0.0005086675519123673,
+  "anomaly_mean": 0.017417632043361664,
+  "gap": 0.016908964491449296,
+  "type_detection": {
+    "control_flow": {
+      "detected": 13,
+      "total": 462,
+      "rate_pct": 2.813852813852814
+    },
+    "data": {
+      "detected": 204,
+      "total": 407,
+      "rate_pct": 50.122850122850124
+    },
+    "resource": {
+      "detected": 9,
+      "total": 478,
+      "rate_pct": 1.882845188284519
+    },
+    "temporal": {
+      "detected": 19,
+      "total": 419,
+      "rate_pct": 4.534606205250596
+    },
+    "cross_entity": {
+      "detected": 193,
+      "total": 244,
+      "rate_pct": 79.09836065573771
+    }
+  }
+}
