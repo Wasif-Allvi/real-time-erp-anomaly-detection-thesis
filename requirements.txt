@@ -1,0 +1,55 @@
+# ============================================================
+# Thesis: Deep Sequential Models for ERP Anomaly Detection
+# Mustafa Wasif Allvi, University of Potsdam, M.Sc. Data Science
+# ============================================================
+# Install with: pip install -r requirements.txt
+# Python 3.10+ recommended
+# CPU-only environment (AMD Ryzen 5 PRO 7530U)
+
+# ----------------------------------------------------------
+# Core Deep Learning
+# ----------------------------------------------------------
+torch==2.2.2
+torchvision==0.17.2          # required by some torch utilities
+
+# ----------------------------------------------------------
+# Process Mining / XES Loading
+# ----------------------------------------------------------
+pm4py==2.7.11.4
+
+# ----------------------------------------------------------
+# Data Science Stack
+# ----------------------------------------------------------
+numpy==1.26.4
+pandas==2.2.2
+scipy==1.13.0
+scikit-learn==1.4.2
+
+# ----------------------------------------------------------
+# Evaluation and Metrics
+# ----------------------------------------------------------
+# All metrics computed via scikit-learn:
+# accuracy_score, f1_score, roc_auc_score, precision_recall_curve
+
+# ----------------------------------------------------------
+# Serialization and Config
+# ----------------------------------------------------------
+joblib==1.4.2                 # scaler / encoder persistence
+pyyaml==6.0.1                 # optional: config as YAML if needed
+
+# ----------------------------------------------------------
+# Logging and Progress
+# ----------------------------------------------------------
+tqdm==4.66.4                  # progress bars for training loops
+
+# ----------------------------------------------------------
+# Visualization (for Chapter 7 figures)
+# ----------------------------------------------------------
+matplotlib==3.9.0
+seaborn==0.13.2
+
+# ----------------------------------------------------------
+# Reproducibility
+# ----------------------------------------------------------
+# All random seeds controlled in config.py via:
+# torch.manual_seed, numpy.random.seed, random.seed

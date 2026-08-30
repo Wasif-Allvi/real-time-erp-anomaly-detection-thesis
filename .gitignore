@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Large regenerable artifacts (recreated by 01_data_loading.py / 02_preprocessing.py)
+results/preprocessed/*.csv
+results/preprocessed/*.joblib
+results/figures/score_cache.npz
+
+# OS
+.DS_Store
+Thumbs.db
