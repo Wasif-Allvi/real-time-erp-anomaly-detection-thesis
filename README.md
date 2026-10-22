@@ -44,6 +44,12 @@ random AUPRC baseline 0.0904):
 | Confidence (softmax) | 0.517 – 0.528 | ≈ 0.09 | ≈ 0.10 |
 | Joint reconstruction | 0.574 – 0.582 | 0.118 – 0.123 | ≈ 0.12 |
 | **Dedicated autoencoder** | **0.6301** | **0.3403** | **0.6909** |
+| Isolation Forest (classical baseline) | 0.5488 | 0.1008 | 0.1038 |
+| One-Class SVM (classical baseline) | 0.4855 | 0.0943 | 0.0905 |
+
+The two classical baselines are fitted on the same clean training data, with
+each prefix reduced to the mean of its 14 features over the observed events.
+Neither gets far beyond random, which is the reason sequence models are used here.
 
 Three findings follow. Prediction confidence alone is near-random for anomalies
 that leave the activity sequence intact. A reconstruction model trained without
@@ -84,7 +90,8 @@ Run the stages in order; each writes to `results/`.
 | 7 | `06_anomaly_injection.py` | Injects the five anomaly types into the test partition only |
 | 8 | `07_scoring.py` | Confidence, reconstruction and composite scoring with threshold selection |
 | 9 | `08_evaluate.py` | Metrics, per-type coverage, latency and throughput |
-| 10 | `generate_plots.py` | Regenerates every figure reported in the thesis |
+| 10 | `09_baseline.py` | Classical baselines (Isolation Forest, One-Class SVM) on mean-aggregated prefixes, scored with the same metrics |
+| 11 | `generate_plots.py` | Regenerates every figure reported in the thesis |
 
 `check_results.py`, `debug_recon.py` and `extract_training_summary.py` are small
 inspection utilities used during development.
