@@ -1,221 +1,34 @@
-# A Comparative Analysis of Deep Sequential Models for Real-Time Anomaly Detection in Heterogeneous ERP Process Flows
+# Real-Time Anomaly Detection for ERP Process Flows
 
-Code, trained models and result files for the Master's thesis of
-**Mustafa Wasif Allvi**, M.Sc. Data Science, University of Potsdam (2026).
+[![Python](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.2-ee4c2c)](https://pytorch.org/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
+Deep sequential models that follow an ERP process event by event and flag anomalies while the case is still running. Three next-activity predictors (LSTM, GRU and Transformer) and a GRU sequence autoencoder score every new event. Each of them needs less than 6 ms per event on average, on a laptop CPU.
+
+The models are trained and tested on the public BPI Challenge 2020 travel expense log. Five types of anomalies are injected into held-out cases: control-flow, data, resource, temporal and cross-entity. Trained weights, raw scores and all result files are included, so every number in this README can be checked without retraining.
+
+- [Status](#status)
+- [Installation](#installation)
+- [Data](#data)
+- [Quick start](#quick-start)
+- [How it works](#how-it-works)
+- [Results](#results)
+- [Repository layout](#repository-layout)
+- [Where the numbers come from](#where-the-numbers-come-from)
+- [Reproducibility](#reproducibility)
+- [Known limitations](#known-limitations)
+- [License and credits](#license-and-credits)
+
+## Status
 
 | | |
 |---|---|
-| **Institution** | University of Potsdam, Chair of Business Informatics, Processes and Systems |
-| **First examiner** | Prof. Dr.-Ing. Marcus Grum |
-| **Second examiner** | M.Sc. Tim Müller |
-| **Dataset** | BPI Challenge 2020 (domestic and international declarations) |
-| **Language / framework** | Python 3.10+, PyTorch 2.2 (CPU only), scikit-learn |
-
-The repository contains everything needed to reproduce every table and figure
-in Chapters 6 and 7 of the thesis, starting from the public event log. The
-version that produced the reported results is tagged `v1.0-submission`.
-
----
-
-## Contents
-
-1. [Abstract](#abstract)
-2. [Research questions](#research-questions)
-3. [Approach](#approach)
-4. [Main results](#main-results)
-5. [Repository structure](#repository-structure)
-6. [Installation](#installation)
-7. [Data](#data)
-8. [Reproducing the results](#reproducing-the-results)
-9. [From result files to thesis tables and figures](#from-result-files-to-thesis-tables-and-figures)
-10. [Reproducibility notes](#reproducibility-notes)
-11. [Limitations](#limitations)
-12. [Citation](#citation)
-
----
-
-## Abstract
-
-ERP systems record business process execution as event logs. Anomalies in
-those logs, whether caused by fraud, process error or system malfunction,
-carry financial and compliance consequences, and they are most useful when
-they are detected while a case is still running. Existing deep learning work
-addresses generic event logs, evaluates single architectures in isolation
-and rarely reports the latency evidence that real-time use requires.
-
-Following a design science approach, the thesis derives a multi-perspective
-detection framework from six ERP process perspectives using the Construction
-of a Concept of Neuronal Modeling (CoNM) methodology. The framework is
-instantiated with three encoders (LSTM, GRU, Transformer) and evaluated on the
-BPI Challenge 2020 log under one identical, seeded protocol, with five anomaly
-types injected into the held-out test cases. The GRU predicts the next
-activity most accurately and most stably. Detection is evaluated on the
-prefixes in which an injected anomaly is already visible. A dedicated
-sequence-to-sequence autoencoder is the strongest detector (ROC-AUC 0.702,
-AUPRC 0.398, 6.6 times the random baseline), while two classical detectors
-without sequence context stay close to random. The scoring channels are
-complementary: the autoencoder detects the two financial anomaly types,
-prediction confidence detects control-flow anomalies, and resource and
-temporal anomalies escape every scorer. Every model runs below 6 ms per event
-on a commodity CPU.
-
-## Research questions
-
-- **RQ1.** Which deep sequential architecture (LSTM, GRU or Transformer)
-  achieves the most effective next-activity prediction on heterogeneous ERP
-  process data, and what architectural characteristics explain the difference?
-- **RQ2.** How effectively do prediction-confidence and reconstruction-based
-  scoring detect the five injected ERP anomaly types, and how does their
-  detection coverage differ by type?
-- **RQ3.** Does the proposed detection artifact meet the latency and
-  throughput requirements for real-time ERP process monitoring?
-
-## Approach
-
-```
-BPI 2020 event log (XES)
-  └─ preprocessing: 14 features across six perspectives, train-only scaling,
-     case-level 70/10/20 split, prefix enumeration (max. 26 events)
-       ├─ classifiers: LSTM | GRU | Transformer, each with two heads
-       │    ├─ softmax over 37 activities  → confidence score
-       │    └─ reconstruction of 7 numerical features → joint reconstruction score
-       ├─ dedicated GRU sequence-to-sequence autoencoder (clean data only)
-       │    └─ reconstruction error → autoencoder score
-       └─ classical baselines: Isolation Forest, One-Class SVM
-  └─ evaluation on the test partition with five injected anomaly types:
-     control-flow, data, resource, temporal, cross-entity
-```
-
-How detection is evaluated (`13_event_level_evaluation.py`):
-
-- **Event-level labels.** Injection alters whole cases, but detection is scored
-  per prefix. A prefix counts as anomalous only once it contains an altered
-  event. Earlier prefixes of an injected case are identical to the original and
-  count as normal. This gives 1,349 anomalous prefixes out of 22,238 (6.07 %).
-  Three injected cases with a declared amount of zero were not changed by the
-  mutation and stay normal.
-- **Held-out thresholds.** F1, precision, recall and per-type detection rates
-  use an F1-optimal threshold chosen on one half of the test cases (stratified
-  by anomaly type) and applied to the other half. The split is repeated
-  1,000 times and the means are reported.
-- **Per-type ROC-AUC.** Each anomaly type is compared with normal prefixes of
-  the same length, because every score depends on prefix length. 95 %
-  intervals come from a case-level cluster bootstrap (1,000 resamples).
-- **Composite score.** The reconstruction error is divided by its 99th
-  percentile on the clean validation prefixes. The weight α of the confidence
-  score is searched over 0, 0.1, …, 1 and checked on held-out halves.
-
-Every classifier is trained three times (seeds 42, 43, 44) with early stopping
-and best-weight restoration. The autoencoder is trained three times (seeds 142,
-143, 144) for a fixed 50 epochs. Its three runs are combined by averaging their
-per-sequence scores.
-
-## Main results
-
-**Next-activity prediction** (22,238 held-out test prefixes, mean of three runs)
-
-| Model | Test accuracy | F1-macro | Parameters |
-|---|---|---|---|
-| LSTM | 85.70 % (± 0.25) | 0.4145 | 219,308 |
-| **GRU** | **86.50 % (± 0.14)** | **0.4283** | 167,852 |
-| Transformer | 84.63 % (± 1.18) | 0.3978 | 74,924 |
-
-± is the population standard deviation over the three seeds. The per-run values are in
-`results/metrics/significance_results.json`.
-
-The GRU was the most accurate model in every seed. On the test set its lead is statistically
-significant: McNemar's test gives p ≤ 4.3 × 10⁻⁴ for every seed, and a case-level bootstrap gives
-95 % confidence intervals for the accuracy difference of +0.62 to +0.98 pp over the LSTM and
-+1.60 to +2.15 pp over the Transformer. Across training runs, paired t-tests with three seeds do
-not reach significance for accuracy. They do for the GRU's F1-macro advantage over the LSTM
-(p = 0.001). The order of the LSTM and the Transformer depends on the seed.
-
-**Anomaly detection** (event-level labels, 6.07 % anomalous prefixes, random AUPRC = 0.0607;
-precision and recall at a held-out F1-optimal threshold, mean of 1,000 splits)
-
-| Method | ROC-AUC | AUPRC | Precision | Recall |
-|---|---|---|---|---|
-| Confidence (three classifiers) | 0.482 – 0.491 | 0.056 – 0.057 | 0.061 – 0.064 | 0.62 – 0.96 |
-| Joint reconstruction (three classifiers) | 0.588 – 0.617 | 0.097 – 0.105 | 0.085 – 0.091 | 0.34 – 0.38 |
-| **Dedicated GRU autoencoder** | **0.7022** | **0.3981** | **0.7910** | 0.2744 |
-| Isolation Forest (classical baseline) | 0.5698 | 0.0695 | 0.0709 | 0.6666 |
-| One-Class SVM (classical baseline) | 0.4800 | 0.0633 | 0.0610 | 0.5899 |
-
-The three autoencoder runs on their own reach ROC-AUC 0.694 – 0.699 and AUPRC 0.381 – 0.393.
-
-**Per-type ROC-AUC** (anomalous prefixes of one type vs. normal prefixes of the same length;
-0.5 = random; bold = 95 % case-level bootstrap interval excludes 0.5)
-
-| Scorer | Control-flow | Data | Resource | Temporal | Cross-entity | Normal prefixes flagged |
-|---|---|---|---|---|---|---|
-| GRU confidence | **0.90** | 0.51 | 0.51 | **0.43** | **0.59** | 93.0 % |
-| GRU joint reconstruction | **0.43** | 0.56 | **0.56** | 0.52 | **0.87** | 21.6 % |
-| Dedicated autoencoder | **0.32** | **0.79** | 0.55 | 0.46 | **0.97** | 0.5 % |
-
-Values below 0.5 mean that the anomalous prefixes look more typical than normal
-prefixes of the same length. All seven scorers are in
-`results/metrics/event_level_results.json`.
-
-**Composite score.** ROC-AUC falls steadily as the weight α of the confidence
-score grows. The best value is α = 0, the reconstruction score alone, for all
-three architectures, and the held-out check selected α = 0 in all 200 selections.
-
-**Inference cost** (CPU only, AMD Ryzen 5 PRO 7530U)
-
-| Model | Mean latency | p95 latency | Throughput |
-|---|---|---|---|
-| LSTM | 1.136 ms | 1.403 ms | 8,380 ev/s |
-| GRU | 3.770 ms | 4.298 ms | 2,190 ev/s |
-| Transformer | 1.115 ms | 1.508 ms | 7,113 ev/s |
-| Autoencoder | 5.912 ms | 8.153 ms | 2,253 ev/s |
-
-Each prefix sequence corresponds to the inference triggered by one arriving
-event, so latency per sequence equals latency per event.
-
-In short:
-
-- Prediction confidence carries no signal over all anomaly types together, but it
-  separates control-flow anomalies clearly once the reordered event has arrived.
-- A reconstruction model trained without a competing classification objective
-  detects the financial anomalies best.
-- Classical detectors on order-free aggregates barely beat chance.
-- Resource and temporal anomalies escape every scorer.
-- A fixed linear combination of the two scores never beats reconstruction alone,
-  so the channels are best run side by side.
-
-## Repository structure
-
-```
-.
-├── config.py                   paths, seeds and all hyperparameters
-├── 01_data_loading.py          load and merge the two XES sub-logs
-├── 02_preprocessing.py         feature schema, imputation, encoding, scaling
-├── 03_sequences.py             prefix enumeration, padding, case-level split
-├── 04_models.py                LSTM, GRU and Transformer definitions (imported)
-├── 05_train.py                 classifier training, three seeded runs each
-├── 05b_autoencoder.py          dedicated GRU autoencoder, three seeded runs
-├── 06_anomaly_injection.py     five anomaly types, test partition only
-├── 07_scoring.py               first evaluation: scoring and composite grid (case-level labels)
-├── 08_evaluate.py              prediction metrics, latency, throughput (+ first anomaly evaluation)
-├── 09_baseline.py              first baseline evaluation (case-level labels)
-├── 10_significance.py          statistical comparison of the three architectures
-├── 11_per_type_auc.py          superseded by 13, kept for reference
-├── 12_export_raw_scores.py     per-run raw scores on test and validation prefixes (needs PyTorch)
-├── 13_event_level_evaluation.py final anomaly-detection evaluation reported in the thesis
-├── generate_plots.py           result figures, first version (needs PyTorch)
-├── generate_plots_v2.py        print-ready result figures used in the thesis (no PyTorch)
-├── check_results.py            ┐
-├── debug_recon.py              ├ inspection utilities used during development
-├── extract_training_summary.py ┘
-├── thesis-code-prototype.ipynb first design cycle (Chapter 5): prototype LSTM, 81.22 % baseline
-├── requirements.txt
-└── results/
-    ├── metrics/                JSON and NPZ files behind every reported number
-    ├── models/                 trained weights (3 runs × 4 models)
-    ├── figures/                first-version figures, score_cache.npz and raw_scores.npz
-    ├── figures_v2/             figures used in the thesis (PDF and PNG)
-    └── *.joblib                fitted encoders, scaler and feature list
-```
+| Python | 3.10 or newer |
+| Main libraries | PyTorch 2.2.2, scikit-learn 1.4.2, pm4py 2.7.11.4, pandas 2.2.2 |
+| Hardware used | AMD Ryzen 5 PRO 7530U (6 cores), 16 GB RAM |
+| GPU | not needed, everything runs on CPU |
+| Frozen version | release `v1.0-submission` |
 
 ## Installation
 
@@ -227,108 +40,194 @@ source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-All experiments ran on CPU. No GPU is required.
-
 ## Data
 
-The experiments use the public BPI Challenge 2020 event log (van Dongen, 2020),
-specifically its *Domestic Declarations* and *International Declarations*
-sub-logs (16,949 cases, 128,588 events in total):
-<https://doi.org/10.4121/uuid:52fb97d4-4588-43c9-9d04-3604d4613b51>
+The project uses the public [BPI Challenge 2020](https://doi.org/10.4121/uuid:52fb97d4-4588-43c9-9d04-3604d4613b51) event log by Boudewijn van Dongen, published on 4TU.ResearchData. Two of its sub-logs are needed: *Domestic Declarations* and *International Declarations* (16,949 cases and 128,588 events together).
 
-Download both `.xes` files and place them in a `dataset/` folder next to this
-repository, as configured in `config.py`. The event log itself is not
-redistributed here.
+The log is not part of this repository. Download both sub-logs and unpack them into a `dataset/` folder next to the repository folder:
 
-## Reproducing the results
+```
+dataset/
+├── BPI Challenge 2020_ Domestic Declarations_1_all/DomesticDeclarations.xes/DomesticDeclarations.xes
+└── BPI Challenge 2020_ International Declarations_1_all/InternationalDeclarations.xes/InternationalDeclarations.xes
+real-time-erp-anomaly-detection-thesis/
+```
 
-Run the scripts in order. Each one reads the outputs of the previous stages
-from `results/` and writes its own.
+The paths are set in `config.py` if you want to change them.
+
+## Quick start
+
+The trained weights and the per-run anomaly scores are included. To recompute every detection result and figure without training:
+
+```bash
+python 01_data_loading.py             # load and merge the two logs
+python 02_preprocessing.py            # build the 14 event features
+python 03_sequences.py                # prefixes and case-level split
+python 06_anomaly_injection.py        # inject anomalies into the test cases
+python 13_event_level_evaluation.py   # all detection results
+python generate_plots_v2.py           # all result figures
+```
+
+The results land in `results/metrics/event_level_results.json` and `results/figures_v2/`.
+
+To run everything from scratch, including training:
 
 ```bash
 python 01_data_loading.py
 python 02_preprocessing.py
 python 03_sequences.py
-python 05_train.py                  # 3 runs × 3 classifiers
-python 05b_autoencoder.py           # 3 autoencoder runs
+python 05_train.py                    # LSTM, GRU, Transformer, 3 seeded runs each
+python 05b_autoencoder.py             # GRU autoencoder, 3 seeded runs
 python 06_anomaly_injection.py
-python 08_evaluate.py               # prediction metrics, latency, throughput
-python 10_significance.py
-python 12_export_raw_scores.py      # per-run scores (needs PyTorch)
-python 13_event_level_evaluation.py # all detection results in the thesis
-python generate_plots_v2.py         # figures of Chapter 7
+python 08_evaluate.py                 # accuracy, latency, throughput
+python 10_significance.py             # statistical comparison of the classifiers
+python 12_export_raw_scores.py        # per-run anomaly scores
+python 13_event_level_evaluation.py
+python generate_plots_v2.py
 ```
 
-The trained weights in `results/models/` are included, so you can skip the two
-training stages. `results/figures/raw_scores.npz` is included as well, so after
-stages 1–3 and 6 have rebuilt the preprocessed data, `13_event_level_evaluation.py`
-and `generate_plots_v2.py` run without PyTorch. `07_scoring.py`,
-`09_baseline.py`, `11_per_type_auc.py` and `generate_plots.py` reproduce the
-first, case-level evaluation and are not needed for the reported numbers.
+Training overwrites the included weights in `results/models/`.
 
-## From result files to thesis tables and figures
+## How it works
 
-| File | Used for |
+**1. Turn the log into prefixes.** The two sub-logs are merged. Each event becomes a vector of 14 features. Seven are categorical: activity, resource, role and four organisation, project and budget identifiers. Seven are numerical: four amount fields, the permit budget, the time since the previous event and the time since the case started. Cases are split 70/10/20 into training, validation and test. Every prefix of a case, up to 26 events, becomes one sample.
+
+**2. Learn normal behaviour.** LSTM, GRU and Transformer encoders each get two output heads. One predicts the next activity out of 37. The other reconstructs the seven numerical features. A separate GRU sequence-to-sequence autoencoder learns to reconstruct the training prefixes. All training data is clean.
+
+**3. Score every event.** Each new event is scored in three ways.
+
+| Score | What it measures |
 |---|---|
-| `results/metrics/event_level_results.json` | anomaly detection and per-type tables, per-type ROC-AUC, composite grid, autoencoder runs (Sec. 7.2–7.4, appendix) |
+| Confidence | 1 minus the highest next-activity probability. High when the model cannot tell what comes next. |
+| Joint reconstruction | How badly the classifier's second head reconstructs the numerical features. |
+| Autoencoder | How badly the dedicated autoencoder reconstructs the prefix. |
+
+A composite score blends confidence and joint reconstruction with a weight α between 0 and 1.
+
+**4. Inject anomalies.** 293 test cases receive one anomaly each. Training and validation data stay untouched.
+
+| Type | What changes |
+|---|---|
+| Control-flow | *Payment Handled* and *Request Payment* swap timestamps, so the payment comes first. |
+| Data | The amount on the first event by an `EMPLOYEE` is multiplied by 10. |
+| Resource | The first approval event gets the `EMPLOYEE` role. |
+| Temporal | The middle event moves 25 hours back in time. |
+| Cross-entity | In a case linked to a travel permit, the amount is multiplied by 5. |
+
+**5. Evaluate per event.**
+
+- A prefix counts as anomalous only once it contains a changed event. Earlier prefixes of the same case still count as normal. This gives 1,349 anomalous prefixes out of 22,238 (6.07 %). Three injected cases had an amount of zero, so the change had no effect and they stay normal.
+- Thresholds are picked on one half of the test cases and applied to the other half. This is repeated 1,000 times and averaged.
+- Per-type ROC-AUC compares each anomaly type with normal prefixes of the same length, with 95 % bootstrap intervals over cases.
+- Isolation Forest and a One-Class SVM serve as classical baselines.
+
+## Results
+
+### Next-activity prediction
+
+Mean of three seeded runs on 22,238 test prefixes. ± is the population standard deviation over the runs.
+
+| Model | Accuracy | F1-macro | Parameters | Mean latency | Throughput |
+|---|---|---|---|---|---|
+| LSTM | 85.70 % ± 0.25 | 0.4145 | 219,308 | 1.136 ms | 8,380 events/s |
+| **GRU** | **86.50 % ± 0.14** | **0.4283** | 167,852 | 3.770 ms | 2,190 events/s |
+| Transformer | 84.63 % ± 1.18 | 0.3978 | 74,924 | 1.115 ms | 7,113 events/s |
+| GRU autoencoder | | | 90,823 | 5.912 ms | 2,253 events/s |
+
+The GRU is the most accurate model in every seed. McNemar's test confirms each of these wins on the test set (p ≤ 4.3 × 10⁻⁴). All models stay below 10 ms per event, even at the 95th percentile. The slowest is the autoencoder with 8.2 ms.
+
+### Anomaly detection
+
+6.07 % of the test prefixes are anomalous, so a random scorer reaches an AUPRC of 0.0607. Precision and recall are measured at a held-out threshold and averaged over 1,000 splits.
+
+| Scorer | ROC-AUC | AUPRC | Precision | Recall |
+|---|---|---|---|---|
+| **GRU autoencoder** | **0.7022** | **0.3981** | **0.791** | 0.274 |
+| Joint reconstruction (3 models) | 0.588 – 0.617 | 0.097 – 0.105 | 0.085 – 0.091 | 0.34 – 0.38 |
+| Confidence (3 models) | 0.482 – 0.491 | 0.056 – 0.057 | 0.061 – 0.064 | 0.62 – 0.96 |
+| Isolation Forest | 0.5698 | 0.0695 | 0.071 | 0.667 |
+| One-Class SVM | 0.4800 | 0.0633 | 0.061 | 0.590 |
+
+The autoencoder's AUPRC is 6.6 times the random level, and it flags only 0.5 % of normal prefixes. Each of its three runs on its own reaches ROC-AUC 0.694 – 0.699 and AUPRC 0.381 – 0.393.
+
+### Which scorer catches which anomaly
+
+![Per-type ROC-AUC of every scorer](results/figures_v2/fig7_6_per_type_auc_v2.png)
+
+Each cell compares one anomaly type with normal prefixes of the same length. 0.5 means random. Below 0.5, the anomalous prefixes look more typical than normal ones. Bold values have a 95 % interval that excludes 0.5.
+
+- **Confidence** catches control-flow anomalies (ROC-AUC 0.84 – 0.90).
+- **Reconstruction** catches the financial ones. The autoencoder reaches 0.79 on data and 0.97 on cross-entity anomalies.
+- **Resource and temporal** anomalies slip past every scorer (0.56 at best).
+- **Mixing does not help.** The best composite weight is α = 0, which is plain reconstruction, for all three models. The held-out check chose α = 0 in all 200 selections. The two scores work best side by side.
+
+## Repository layout
+
+```
+.
+├── config.py                       paths, seeds and hyperparameters
+├── 01_data_loading.py              load and merge the two XES logs
+├── 02_preprocessing.py             features, imputation, encoding, scaling
+├── 03_sequences.py                 prefixes, padding, case-level split
+├── 04_models.py                    LSTM, GRU and Transformer (imported by the others)
+├── 05_train.py                     train the three classifiers
+├── 05b_autoencoder.py              train the GRU autoencoder
+├── 06_anomaly_injection.py         inject the five anomaly types into test cases
+├── 08_evaluate.py                  accuracy, latency, throughput
+├── 10_significance.py              statistical comparison of the classifiers
+├── 12_export_raw_scores.py         per-run anomaly scores
+├── 13_event_level_evaluation.py    all detection results
+├── generate_plots_v2.py            all result figures
+├── 07_scoring.py                   ┐
+├── 09_baseline.py                  │ first, case-level evaluation,
+├── 11_per_type_auc.py              │ kept for reference
+├── generate_plots.py               ┘
+├── check_results.py                ┐
+├── debug_recon.py                  ├ small helpers used during development
+├── extract_training_summary.py     ┘
+├── thesis-code-prototype.ipynb     first prototype (single LSTM, 81.22 % accuracy)
+├── requirements.txt
+├── LICENSE
+└── results/
+    ├── models/                     trained weights, 3 runs × 4 models
+    ├── metrics/                    JSON and NPZ files behind every number
+    ├── figures_v2/                 final figures (PDF and PNG)
+    ├── figures/                    first-version figures, raw_scores.npz, score_cache.npz
+    └── *.joblib                    fitted encoders, scaler and feature list
+```
+
+## Where the numbers come from
+
+| File | Contents |
+|---|---|
+| `results/metrics/event_level_results.json` | all detection results: scorers, per-type ROC-AUC with intervals, composite grid, autoencoder runs |
 | `results/metrics/event_labels.npz` | event-level labels and prefix lengths of the 22,238 test prefixes |
-| `results/figures/raw_scores.npz` | per-run scores on the test and validation prefixes (input of 13 and of the figures) |
-| `results/metrics/final_evaluation.json` | prediction and latency results (Sec. 7.1, 7.5). Its anomaly part is the first, case-level evaluation |
-| `results/metrics/significance_results.json` | statistical comparison of the architectures (Sec. 7.1) |
-| `results/metrics/injection_summary.json` | injected anomaly counts per type, before removing the three unchanged cases |
-| `results/metrics/*_train_history.json` | training curves and best epochs |
-| `results/metrics/scoring_results.json`, `autoencoder_results.json`, `baseline_results.json`, `per_type_auc.json` | first, case-level evaluation, kept for reference |
+| `results/figures/raw_scores.npz` | per-run scores on the test and validation prefixes, the input of step 13 and of the figures |
+| `results/metrics/final_evaluation.json` | accuracy, latency and throughput. Its anomaly block is the earlier case-level evaluation. |
+| `results/metrics/significance_results.json` | per-run accuracy and the statistical tests |
+| `results/metrics/injection_summary.json` | how many cases were selected and changed per anomaly type |
+| `results/metrics/*_train_history.json` | training curves |
+| `scoring_results.json`, `autoencoder_results.json`, `baseline_results.json`, `per_type_auc.json` | earlier case-level evaluation, kept for reference |
 
-| File in `results/figures_v2/` (suffix `_v2`) | Thesis figure |
-|---|---|
-| `fig7_1_val_loss` | Figure 4: validation loss, three runs per architecture |
-| `fig7_2_lr_decay` | Figure 5: learning-rate decay |
-| `fig7_3_pred_performance` | Figure 6: next-activity prediction comparison |
-| `fig7_4_roc_curves` | Figure 7: ROC curves (event-level labels) |
-| `fig7_5_pr_curves` | Figure 8: precision-recall curves (event-level labels) |
-| `fig7_6_per_type_auc` | Figure 9: length-matched per-type ROC-AUC |
-| `fig7_7_alpha_beta` | Figure 10: composite weighting, α = 0 … 1 |
-| `fig7_8_latency` | Figure 11: latency against the 10 ms bound |
+## Reproducibility
 
-## Reproducibility notes
+- Seeds: case split 42, anomaly injection 2024, classifier runs 42, 43 and 44, autoencoder runs 142, 143 and 144. The held-out splits and bootstrap resamples in `13_event_level_evaluation.py` are seeded as well.
+- Scalers are fitted on training data only. The split is made per case, and no case appears in two partitions.
+- The composite score is normalised with clean validation data, so no test information leaks into it.
+- `results/preprocessed/` is not tracked. Steps 01 to 03 and 06 rebuild it.
+- Isolation Forest results can differ in the fourth decimal across scikit-learn versions.
+- Release `v1.0-submission` freezes the exact code, weights and result files behind the numbers in this README.
 
-- Seeds: case split 42, anomaly injection 2024, classifier runs 42 / 43 / 44,
-  autoencoder runs 142 / 143 / 144. Held-out splits and bootstrap resamples in
-  `13_event_level_evaluation.py` are seeded as well.
-- Scalers are fitted on the training partition only. The split is made at case
-  level, and partition disjointness is verified.
-- The normalization of the reconstruction score for the composite uses the
-  clean validation prefixes, so no test information enters it.
-- Isolation Forest results can differ in the fourth decimal between
-  scikit-learn versions.
-- Large intermediate files (`results/preprocessed/`) are excluded from version
-  control. Stages 1–3 and 6 regenerate them deterministically.
-- Hardware: AMD Ryzen 5 PRO 7530U (six cores), 16 GB RAM, no GPU.
+## Known limitations
 
-## Limitations
-
-- The evaluation uses a single institutional dataset.
-- Anomaly ground truth comes from controlled injection, not from audited fraud cases.
-- Thresholds and the composite weight are calibrated within the injected test
-  partition (on held-out halves), not on independent production data.
-- Categorical attributes enter the networks as label-encoded integers, and the
-  Transformer does not mask the padded positions.
+- One dataset from one organisation.
+- The anomalies are injected. They are not audited real-world fraud cases.
+- Thresholds and the composite weight are tuned on held-out halves of the injected test set, not on separate production data.
+- Categorical attributes enter the networks as integer codes, and the Transformer does not mask padded positions.
 - Each architecture was trained three times.
 
-The thesis discusses each of these in Section 8.7.
+## License and credits
 
-## Citation
+The code is released under the MIT License, see [LICENSE](LICENSE). The BPI Challenge 2020 log is not included. It is published by 4TU.ResearchData under its own license, so check the dataset page before you reuse it.
 
-```bibtex
-@mastersthesis{Allvi2026,
-  author  = {Mustafa Wasif Allvi},
-  title   = {A Comparative Analysis of Deep Sequential Models for Real-Time
-             Anomaly Detection in Heterogeneous ERP Process Flows},
-  school  = {University of Potsdam},
-  type    = {Master's thesis},
-  address = {Potsdam, Germany},
-  year    = {2026}
-}
-```
-
-Dataset: B. F. van Dongen, *BPI Challenge 2020*, 4TU.ResearchData, 2020.
+Developed by Mustafa Wasif Allvi at the University of Potsdam as part of a Master's thesis.
