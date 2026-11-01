@@ -180,7 +180,7 @@ ANOMALY_TYPES = [
 
 ANOMALY_PARAMS = {
     "data"         : {"amount_multiplier": 10.0},
-    "temporal"     : {"gap_multiplier": 50.0},
+    "temporal"     : {"gap_multiplier": 50.0},   # not used: 06 moves the middle event by a fixed 25 hours
     "cross_entity" : {"amount_multiplier": 5.0},
 }
 

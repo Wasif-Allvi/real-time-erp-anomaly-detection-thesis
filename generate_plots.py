@@ -303,8 +303,6 @@ def fig_val_loss():
         ax.set_xlim(1, max_len)
         ax.legend(loc='upper right', fontsize=9)
 
-    fig.suptitle('Figure 1 — Validation Loss Convergence Curves',
-                  fontsize=12, fontweight='bold', y=1.01)
     plt.tight_layout()
     save_fig(fig, 'fig7_1_val_loss')
 
@@ -356,8 +354,6 @@ def fig_lr_decay():
         ax.yaxis.set_minor_formatter(mticker.NullFormatter())
         ax.legend(loc='upper right', fontsize=9)
 
-    fig.suptitle('Figure 2 — Learning Rate Decay Trajectories',
-                  fontsize=12, fontweight='bold', y=1.01)
     plt.tight_layout()
     save_fig(fig, 'fig7_2_lr_decay')
 
@@ -413,8 +409,6 @@ def fig_pred_perf():
     ax2.set_title('F1-Macro (37 activity classes)')
     ax2.legend(fontsize=9, loc='upper left')
 
-    fig.suptitle('Figure 3 — Next-Activity Prediction Performance on Test Set',
-                  fontsize=12, fontweight='bold', y=1.01)
     plt.tight_layout()
     save_fig(fig, 'fig7_3_pred_performance')
 
@@ -448,7 +442,6 @@ def fig_roc_curves(sc):
     ax.set_xlim(-0.01, 1.01)
     ax.set_ylim(-0.01, 1.01)
     ax.legend(loc='lower right', fontsize=9.5)
-    ax.set_title('Figure 4 — ROC Curves: Anomaly Detection Performance', pad=12)
     plt.tight_layout()
     save_fig(fig, 'fig7_4_roc_curves')
 
@@ -484,8 +477,6 @@ def fig_pr_curves(sc):
     ax.set_xlim(-0.01, 1.01)
     ax.set_ylim(-0.01, 1.05)
     ax.legend(loc='upper right', fontsize=9.5)
-    ax.set_title('Figure 5 — Precision-Recall Curves: AUPRC under Class Imbalance',
-                  pad=12)
     plt.tight_layout()
     save_fig(fig, 'fig7_5_pr_curves')
 
@@ -542,7 +533,6 @@ def fig_detection_heatmap():
     for y in (2.5, 5.5):
         ax.axhline(y=y, color='white', linewidth=3.0, zorder=5)
 
-    ax.set_title('Figure 6 — Per-Type Anomaly Detection Coverage Heatmap', pad=12)
     plt.tight_layout()
     save_fig(fig, 'fig7_6_detection_heatmap')
 
@@ -590,7 +580,6 @@ def fig_alpha_beta():
     ax2.spines['top'].set_visible(True)
 
     ax.legend(fontsize=10, loc='upper right')
-    ax.set_title('Figure 7 — Composite Scoring Weight Sensitivity Analysis', pad=14)
     plt.tight_layout()
     save_fig(fig, 'fig7_7_alpha_beta')
 
@@ -701,7 +690,6 @@ def fig_latency_accuracy():
                title_fontsize=9, fontsize=8.5,
                loc='upper right', borderpad=0.9)
 
-    ax.set_title('Figure 8 — Latency vs. Accuracy Deployment Tradeoff', pad=12)
     plt.tight_layout()
     save_fig(fig, 'fig7_8_latency_accuracy')
 
