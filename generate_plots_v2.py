@@ -6,8 +6,9 @@
 #   * runs WITHOUT PyTorch: reads only the metric JSON files, the
 #     training histories, results/figures/raw_scores.npz and the
 #     event-level labels written by 13_event_level_evaluation.py
-#   * Times-like font (STIX) to match the thesis text, sizes set
-#     for the printed text width (figures are 6.3 in wide)
+#   * sans-serif font (Liberation Sans on Linux, Arial on Windows, the two
+#     are metrically identical) at about 10 pt in print, as the LSWI
+#     thesis guideline asks for figures
 #   * vector PDF output (plus PNG), written to results/figures_v2/
 #   * Fig 7.1: mean curve only while all three runs are active
 #   * Fig 7.3: per-run dot plot instead of truncated bars
@@ -22,9 +23,20 @@
 #              for the autoencoder
 #
 # Requires: 10_significance.py and 13_event_level_evaluation.py to have run.
+#
+# Two sets of classifiers exist (see 17_padding_robustness.py):
+#   python generate_plots_v2.py --readout last_real
+#       classifiers that read their output at the last real event.
+#       Reads results/last_real/ (18_last_real_evaluation.py) and writes
+#       results/last_real/figures/. These are the figures of the thesis.
+#   python generate_plots_v2.py
+#       classifiers that read their output at position 26, after the
+#       padded steps (first configuration, compared in Section 7.1.4 of the
+#       thesis). Reads results/metrics/, writes results/figures_v2/.
 # ============================================================
 
 import os
+import sys
 import json
 import numpy as np
 import joblib
@@ -32,6 +44,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
+from matplotlib import font_manager
 from matplotlib.colors import TwoSlopeNorm
 from sklearn.metrics import roc_curve, auc, precision_recall_curve, average_precision_score
 
@@ -41,20 +54,40 @@ PREP = os.path.join(ROOT, "results", "preprocessed")
 RAW = os.path.join(ROOT, "results", "figures", "raw_scores.npz")
 LABELS = os.path.join(MET, "event_labels.npz")
 OUT = os.path.join(ROOT, "results", "figures_v2")
+READOUT = "last_real" if "last_real" in sys.argv[1:] else "position26"
+if READOUT == "last_real":
+    MET = os.path.join(ROOT, "results", "last_real")
+    RAW = os.path.join(MET, "raw_scores.npz")
+    LABELS = os.path.join(MET, "event_labels.npz")
+    OUT = os.path.join(MET, "figures")
+JOINT = "transformer" if READOUT == "last_real" else "gru"   # joint reconstruction curve shown in Fig 7.4/7.5
 os.makedirs(OUT, exist_ok=True)
 
-W = 6.3  # figure width in inches (thesis text width is about 5.9 in)
+W = 6.15  # after the tight crop the figures are about 15 cm wide, the thesis text width,
+          # so a font size of 10 pt here is about 10 pt in print
+
+# First installed font of the list: Liberation Sans (Linux), Arial (Windows),
+# Helvetica (macOS). Also used for the alpha/beta label of Fig 7.7.
+_installed = {f.name for f in font_manager.fontManager.ttflist}
+SANS = next((f for f in ("Liberation Sans", "Arial", "Helvetica") if f in _installed), "DejaVu Sans")
 
 plt.rcParams.update({
-    "font.family": "STIXGeneral",
-    "mathtext.fontset": "stix",
-    "font.size": 9,
-    "axes.labelsize": 9,
-    "axes.titlesize": 9.5,
+    "font.family": "sans-serif",
+    "font.sans-serif": [SANS, "DejaVu Sans"],
+    "mathtext.fontset": "custom",
+    "mathtext.rm": SANS,
+    "mathtext.it": f"{SANS}:italic",
+    "mathtext.bf": f"{SANS}:bold",
+    "mathtext.sf": SANS,
+    "mathtext.cal": SANS,   # unused, set only to avoid a 'cursive not found' warning
+    "font.size": 10,
+    "axes.labelsize": 10,
+    "axes.titlesize": 10,
     "axes.titleweight": "bold",
-    "xtick.labelsize": 8,
-    "ytick.labelsize": 8,
-    "legend.fontsize": 7.5,
+    "xtick.labelsize": 9,
+    "ytick.labelsize": 9,
+    "legend.fontsize": 9,
+    "legend.title_fontsize": 9,
     "legend.framealpha": 0.95,
     "legend.edgecolor": "#cccccc",
     "axes.spines.top": False,
@@ -95,7 +128,7 @@ def save(fig, stem):
 
 # ------------------------------------------------------------ 7.1
 def fig_val_loss():
-    fig, axes = plt.subplots(1, 3, figsize=(W, 2.35), sharey=True)
+    fig, axes = plt.subplots(1, 3, figsize=(W, 2.75), sharey=True)
     for ax, m in zip(axes, MODELS):
         runs = load(f"{m}_train_history.json")
         curves = [np.array(r["history"]["val_loss"]) for r in runs]
@@ -115,7 +148,7 @@ def fig_val_loss():
         ax.set_xlim(1, max(len(v) for v in curves))
     axes[0].set_ylabel("Validation loss")
     for ax in axes:
-        ax.legend(loc="upper right", fontsize=6, handlelength=1.4,
+        ax.legend(loc="upper right", fontsize=8, handlelength=1.2,
                   borderpad=0.3, labelspacing=0.25)
     fig.tight_layout(w_pad=0.6)
     save(fig, "fig7_1_val_loss")
@@ -123,7 +156,7 @@ def fig_val_loss():
 
 # ------------------------------------------------------------ 7.2
 def fig_lr_decay():
-    fig, axes = plt.subplots(1, 3, figsize=(W, 2.0), sharey=True)
+    fig, axes = plt.subplots(1, 3, figsize=(W, 2.35), sharey=True)
     for ax, m in zip(axes, MODELS):
         runs = load(f"{m}_train_history.json")
         for i, r in enumerate(runs):
@@ -135,18 +168,18 @@ def fig_lr_decay():
         ax.set_xlabel("Epoch")
         ax.yaxis.set_major_formatter(mticker.LogFormatterMathtext())
         ax.yaxis.set_minor_formatter(mticker.NullFormatter())
-        ax.legend(loc="upper right", fontsize=6.5)
+        ax.legend(loc="upper right", fontsize=8.5)
     axes[0].set_ylabel("Learning rate")
-    fig.tight_layout(w_pad=0.6)
+    fig.tight_layout(w_pad=1.6)
     save(fig, "fig7_2_lr_decay")
 
 
 # ------------------------------------------------------------ 7.3
 def fig_pred_performance():
     sig = load("significance_results.json")["per_run"]
-    fig, axes = plt.subplots(1, 2, figsize=(W, 2.5))
+    fig, axes = plt.subplots(1, 2, figsize=(W, 2.85))
     panels = [("accuracy_pct", "Test accuracy (%)", 81.22, "{:.2f}"),
-              ("f1_macro", "F1-macro (37 classes)", 0.2890, "{:.4f}")]
+              ("f1_macro", "F1-macro (34 test classes)", 0.2890, "{:.4f}")]
     rng = np.random.default_rng(0)
     for ax, (key, label, first, fmt) in zip(axes, panels):
         for x, m in enumerate(MODELS):
@@ -157,10 +190,10 @@ def fig_pred_performance():
             mu, sd = vals.mean(), vals.std(ddof=0)
             ax.errorbar(x + 0.22, mu, yerr=sd, fmt="D", ms=4.5, color=COL[m],
                         ecolor="black", elinewidth=0.8, capsize=3, zorder=4)
-            ax.annotate(fmt.format(mu), (x + 0.32, mu), va="center", fontsize=7.5)
+            ax.annotate(fmt.format(mu), (x + 0.32, mu), va="center", fontsize=9)
         ax.axhline(first, color=COL["base"], ls="--", lw=0.9)
         ax.annotate(f"first-cycle LSTM ({fmt.format(first)})", (-0.35, first),
-                    xytext=(0, 3), textcoords="offset points", fontsize=7,
+                    xytext=(0, 3), textcoords="offset points", fontsize=8.5,
                     color="#616161")
         ax.set_xticks(range(3))
         ax.set_xticklabels([DISP[m] for m in MODELS])
@@ -185,7 +218,7 @@ def curve_entries(sc, iso):
     e = [("lstm_confidence", "LSTM confidence", COL["lstm"], "--", 1.0),
          ("gru_confidence", "GRU confidence", COL["gru"], "--", 1.0),
          ("transformer_confidence", "Transformer confidence", COL["transformer"], "--", 1.0),
-         ("gru_joint_recon", "GRU joint reconstruction", COL["joint"], "-", 1.3),
+         (f"{JOINT}_joint_recon", f"{DISP[JOINT]} joint reconstruction", COL["joint"], "-", 1.3),
          ("autoencoder", "Dedicated autoencoder", COL["autoencoder"], "-", 1.7)]
     return [(sc[k], lab, c, ls, lw) for k, lab, c, ls, lw in e]
 
@@ -193,7 +226,7 @@ def curve_entries(sc, iso):
 # ------------------------------------------------------------ 7.4 / 7.5
 def fig_roc(sc, iso):
     y = sc["true_binary"]
-    fig, ax = plt.subplots(figsize=(W, 3.1))
+    fig, ax = plt.subplots(figsize=(W, 3.55))
     ax.plot([0, 1], [0, 1], ":", color=COL["base"], lw=1.0, label="Random (0.50)")
     for s, lab, c, ls, lw in curve_entries(sc, iso):
         fpr, tpr, _ = roc_curve(y, s)
@@ -204,14 +237,14 @@ def fig_roc(sc, iso):
     ax.set_ylim(0, 1.01)
     ax.set_aspect("equal")
     ax.legend(loc="center left", bbox_to_anchor=(1.03, 0.5), title="ROC-AUC",
-              title_fontsize=7.5)
+              title_fontsize=9)
     save(fig, "fig7_4_roc_curves")
 
 
 def fig_pr(sc, iso):
     y = sc["true_binary"]
     base = float(y.mean())
-    fig, ax = plt.subplots(figsize=(W, 3.1))
+    fig, ax = plt.subplots(figsize=(W, 3.55))
     ax.axhline(base, ls=":", color=COL["base"], lw=1.0, label=f"Random ({base:.4f})")
     for s, lab, c, ls, lw in curve_entries(sc, iso):
         p, r, _ = precision_recall_curve(y, s)
@@ -223,7 +256,7 @@ def fig_pr(sc, iso):
     ax.set_ylim(0, 1.02)
     ax.set_aspect("equal")
     ax.legend(loc="center left", bbox_to_anchor=(1.03, 0.5), title="AUPRC",
-              title_fontsize=7.5)
+              title_fontsize=9)
     save(fig, "fig7_5_pr_curves")
 
 
@@ -241,7 +274,7 @@ def fig_per_type_auc():
     LO = np.array([[pt[k]["per_type_length_matched"][t]["ci95"][0] for t in types] for k, _ in rows])
     HI = np.array([[pt[k]["per_type_length_matched"][t]["ci95"][1] for t in types] for k, _ in rows])
 
-    fig, ax = plt.subplots(figsize=(W, 2.9))
+    fig, ax = plt.subplots(figsize=(5.45, 3.2))
     norm = TwoSlopeNorm(vmin=0.3, vcenter=0.5, vmax=1.0)
     im = ax.imshow(M, cmap="RdBu", norm=norm, aspect="auto")
     ax.grid(False)
@@ -249,7 +282,7 @@ def fig_per_type_auc():
         for j in range(M.shape[1]):
             v = M[i, j]
             sig = LO[i, j] > 0.5 or HI[i, j] < 0.5      # interval excludes 0.5
-            ax.text(j, i, f"{v:.2f}", ha="center", va="center", fontsize=8,
+            ax.text(j, i, f"{v:.2f}", ha="center", va="center", fontsize=9,
                     color=("white" if (v > 0.8 or v < 0.36) else "black") if sig else "#8a8a8a",
                     fontweight="bold" if sig else "normal")
     for yline in (2.5, 5.5):
@@ -263,7 +296,7 @@ def fig_per_type_auc():
         s.set_visible(False)
     cb = fig.colorbar(im, ax=ax, fraction=0.04, pad=0.02, ticks=[0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0])
     cb.set_label("Per-type ROC-AUC (0.5 = random)")
-    cb.ax.tick_params(labelsize=7)
+    cb.ax.tick_params(labelsize=9)
     cb.outline.set_linewidth(0.5)
     save(fig, "fig7_6_per_type_auc")
 
@@ -271,7 +304,7 @@ def fig_per_type_auc():
 # ------------------------------------------------------------ 7.7
 def fig_alpha_beta():
     comp = load("event_level_results.json")["composite"]
-    fig, ax = plt.subplots(figsize=(W, 2.5))
+    fig, ax = plt.subplots(figsize=(W, 2.8))
     for m in MODELS:
         g = comp[m]["grid_roc_auc"]
         a = sorted(float(k) for k in g)
@@ -301,25 +334,26 @@ def fig_latency():
     means = [lat[n]["latency_mean_ms"] for n in names]
     p95 = [lat[n]["latency_p95_ms"] for n in names]
     yy = np.arange(len(names))[::-1].astype(float)
-    fig, ax = plt.subplots(figsize=(W, 2.6))
+    fig, ax = plt.subplots(figsize=(W, 3.0))
     ax.barh(yy, means, color=colors, alpha=0.85, height=0.42, label="Mean latency")
     ax.scatter(p95, yy, marker="|", s=110, color="black", lw=1.3,
                label="95th percentile", zorder=4)
     for yv, mv, pv, n in zip(yy, means, p95, names):
         ax.annotate(f"mean {mv:.2f} ms, p95 {pv:.2f} ms, "
                     f"{lat[n]['throughput_events_per_sec']:,.0f} events/s",
-                    (0.05, yv - 0.36), fontsize=6.8, va="center", color="#333333")
+                    (0.05, yv - 0.36), fontsize=8, va="center", color="#333333")
     ax.axvline(10, color="#C62828", ls="--", lw=1.0)
     ax.annotate("10 ms bound (DR4)", (10, yy[0] + 0.35), xytext=(-3, 0),
-                textcoords="offset points", ha="right", va="center", fontsize=7,
+                textcoords="offset points", ha="right", va="center", fontsize=8.5,
                 color="#C62828")
     ax.set_yticks(yy)
-    ax.set_yticklabels(labels, fontsize=7.5)
+    ax.set_yticklabels(labels, fontsize=9)
     ax.set_ylim(-0.75, len(names) - 0.4)
     ax.set_xlim(0, 10.5)
-    ax.set_xlabel("Inference latency (ms per sequence, CPU only)")
+    ax.set_xlabel("Inference latency (ms per prefix of 26 events, CPU only)" if READOUT == "last_real"
+                  else "Inference latency (ms per sequence, CPU only)")
     ax.grid(axis="y", visible=False)
-    ax.legend(loc="center right", fontsize=7)
+    ax.legend(loc="center right", fontsize=8.5)
     fig.tight_layout()
     save(fig, "fig7_8_latency")
 
