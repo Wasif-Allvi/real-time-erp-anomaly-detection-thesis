@@ -1,0 +1,337 @@
+{
+  "protocol": {
+    "sequence_length": 26,
+    "warmup_runs": 10,
+    "measured_runs": 100,
+    "repeats": 5,
+    "reported": "median repeat of the mean latency",
+    "device": "cpu",
+    "torch_threads": 6,
+    "torch": "2.2.2+cpu",
+    "processor": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD"
+  },
+  "single": {
+    "lstm": [
+      {
+        "forward_passes": 1,
+        "latency_mean_ms": 0.7377369981259108,
+        "latency_p95_ms": 0.9367300197482109,
+        "latency_mean_ms_all_repeats": [
+          0.6961250305175781,
+          0.7144759781658649,
+          0.7377369981259108,
+          0.7863790355622768,
+          0.7921300083398819
+        ],
+        "throughput_events_per_sec": 9732.792273962286,
+        "within_10ms_bound": true
+      },
+      {
+        "forward_passes": 1,
+        "latency_mean_ms": 0.9250790439546108,
+        "latency_p95_ms": 1.0668456554412842,
+        "latency_mean_ms_all_repeats": [
+          0.6710509862750769,
+          0.8930369652807713,
+          0.9250790439546108,
+          1.0092580784112215,
+          1.1070129834115505
+        ],
+        "throughput_events_per_sec": 12155.394547158861,
+        "within_10ms_bound": true
+      },
+      {
+        "forward_passes": 1,
+        "latency_mean_ms": 0.7677940465509892,
+        "latency_p95_ms": 0.8832945488393306,
+        "latency_mean_ms_all_repeats": [
+          0.6985839921981096,
+          0.723505038768053,
+          0.7677940465509892,
+          0.7932830136269331,
+          0.8108700346201658
+        ],
+        "throughput_events_per_sec": 11945.83908897584,
+        "within_10ms_bound": true
+      }
+    ],
+    "gru": [
+      {
+        "forward_passes": 1,
+        "latency_mean_ms": 2.5343799870461226,
+        "latency_p95_ms": 3.2843447290360928,
+        "latency_mean_ms_all_repeats": [
+          2.484855018556118,
+          2.5275479536503553,
+          2.5343799870461226,
+          2.748064985498786,
+          2.751123011112213
+        ],
+        "throughput_events_per_sec": 2929.874105028563,
+        "within_10ms_bound": true
+      },
+      {
+        "forward_passes": 1,
+        "latency_mean_ms": 2.561169993132353,
+        "latency_p95_ms": 3.274925099685788,
+        "latency_mean_ms_all_repeats": [
+          2.513209991157055,
+          2.5239269714802504,
+          2.561169993132353,
+          2.655780026689172,
+          2.765799006447196
+        ],
+        "throughput_events_per_sec": 2691.735019839225,
+        "within_10ms_bound": true
+      },
+      {
+        "forward_passes": 1,
+        "latency_mean_ms": 2.603507023304701,
+        "latency_p95_ms": 3.2866543158888817,
+        "latency_mean_ms_all_repeats": [
+          2.4967199563980103,
+          2.5266229920089245,
+          2.603507023304701,
+          2.6234169770032167,
+          2.8532780334353447
+        ],
+        "throughput_events_per_sec": 2776.801557776847,
+        "within_10ms_bound": true
+      }
+    ],
+    "transformer": [
+      {
+        "forward_passes": 1,
+        "latency_mean_ms": 0.7701610401272774,
+        "latency_p95_ms": 0.9193142410367727,
+        "latency_mean_ms_all_repeats": [
+          0.7292599882930517,
+          0.7456159964203835,
+          0.7701610401272774,
+          0.798042006790638,
+          0.8415910229086876
+        ],
+        "throughput_events_per_sec": 7122.930423751374,
+        "within_10ms_bound": true
+      },
+      {
+        "forward_passes": 1,
+        "latency_mean_ms": 0.8939900435507298,
+        "latency_p95_ms": 1.094959769397974,
+        "latency_mean_ms_all_repeats": [
+          0.7829440385103226,
+          0.8005480002611876,
+          0.8939900435507298,
+          0.9151510149240494,
+          0.9224239643663168
+        ],
+        "throughput_events_per_sec": 8690.534678872726,
+        "within_10ms_bound": true
+      },
+      {
+        "forward_passes": 1,
+        "latency_mean_ms": 0.7558480184525251,
+        "latency_p95_ms": 0.8837802335619926,
+        "latency_mean_ms_all_repeats": [
+          0.7243009656667709,
+          0.7288179732859135,
+          0.7558480184525251,
+          0.7741620112210512,
+          0.8188220672309399
+        ],
+        "throughput_events_per_sec": 9409.246365931609,
+        "within_10ms_bound": true
+      }
+    ],
+    "autoencoder": [
+      {
+        "forward_passes": 1,
+        "latency_mean_ms": 4.09913394600153,
+        "latency_p95_ms": 5.304250121116638,
+        "latency_mean_ms_all_repeats": [
+          4.041428016498685,
+          4.063811032101512,
+          4.09913394600153,
+          4.115416947752237,
+          4.127816986292601
+        ],
+        "throughput_events_per_sec": 2809.9929333782525,
+        "within_10ms_bound": true
+      },
+      {
+        "forward_passes": 1,
+        "latency_mean_ms": 4.120734995231032,
+        "latency_p95_ms": 5.335299763828516,
+        "latency_mean_ms_all_repeats": [
+          3.935118019580841,
+          4.079698044806719,
+          4.120734995231032,
+          4.231086019426584,
+          4.401007993146777
+        ],
+        "throughput_events_per_sec": 2828.716779406474,
+        "within_10ms_bound": true
+      },
+      {
+        "forward_passes": 1,
+        "latency_mean_ms": 4.134154981002212,
+        "latency_p95_ms": 5.321535328403115,
+        "latency_mean_ms_all_repeats": [
+          3.9237510412931442,
+          3.981747953221202,
+          4.134154981002212,
+          4.175793984904885,
+          4.303625002503395
+        ],
+        "throughput_events_per_sec": 2790.2819712575233,
+        "within_10ms_bound": true
+      }
+    ]
+  },
+  "three_runs": {
+    "lstm": {
+      "forward_passes": 3,
+      "latency_mean_ms": 2.278767991811037,
+      "latency_p95_ms": 2.867494849488139,
+      "latency_mean_ms_all_repeats": [
+        2.152024023234844,
+        2.2425139881670475,
+        2.278767991811037,
+        2.2946829441934824,
+        2.320035984739661
+      ],
+      "throughput_events_per_sec": 4159.383412181708,
+      "within_10ms_bound": true
+    },
+    "gru": {
+      "forward_passes": 3,
+      "latency_mean_ms": 8.497560014948249,
+      "latency_p95_ms": 10.50808490253985,
+      "latency_mean_ms_all_repeats": [
+        7.893316997215152,
+        8.462956929579377,
+        8.497560014948249,
+        8.504533944651484,
+        9.288868959993124
+      ],
+      "throughput_events_per_sec": 970.7636037582239,
+      "within_10ms_bound": true
+    },
+    "transformer": {
+      "forward_passes": 3,
+      "latency_mean_ms": 2.3565019480884075,
+      "latency_p95_ms": 2.7661101892590523,
+      "latency_mean_ms_all_repeats": [
+        2.299019917845726,
+        2.3368929885327816,
+        2.3565019480884075,
+        2.3927950114011765,
+        2.5237269792705774
+      ],
+      "throughput_events_per_sec": 3305.2326586134623,
+      "within_10ms_bound": true
+    },
+    "autoencoder": {
+      "forward_passes": 3,
+      "latency_mean_ms": 12.496897000819445,
+      "latency_p95_ms": 16.090940684080124,
+      "latency_mean_ms_all_repeats": [
+        12.219915939494967,
+        12.368898950517178,
+        12.496897000819445,
+        12.58002602495253,
+        12.596795028075576
+      ],
+      "throughput_events_per_sec": 930.5467799968757,
+      "within_10ms_bound": false
+    }
+  },
+  "pair_one_classifier_one_autoencoder": {
+    "lstm": {
+      "forward_passes": 2,
+      "latency_mean_ms": 4.828393971547484,
+      "latency_p95_ms": 6.396629242226481,
+      "latency_mean_ms_all_repeats": [
+        4.805818973109126,
+        4.822547975927591,
+        4.828393971547484,
+        4.876217907294631,
+        5.198613945394754
+      ],
+      "throughput_events_per_sec": 2173.523374987524,
+      "within_10ms_bound": true
+    },
+    "gru": {
+      "forward_passes": 2,
+      "latency_mean_ms": 7.070159008726478,
+      "latency_p95_ms": 9.56147508695721,
+      "latency_mean_ms_all_repeats": [
+        6.681737033650279,
+        6.801383933052421,
+        7.070159008726478,
+        7.503755958750844,
+        7.542467005550861
+      ],
+      "throughput_events_per_sec": 1178.2267962430515,
+      "within_10ms_bound": true
+    },
+    "transformer": {
+      "forward_passes": 2,
+      "latency_mean_ms": 7.281430987641215,
+      "latency_p95_ms": 8.089130511507392,
+      "latency_mean_ms_all_repeats": [
+        6.914485050365329,
+        7.149935988709331,
+        7.281430987641215,
+        7.513672029599547,
+        8.57379101216793
+      ],
+      "throughput_events_per_sec": 1583.3490261113482,
+      "within_10ms_bound": true
+    }
+  },
+  "all_three_classifier_and_three_autoencoder_runs": {
+    "lstm": {
+      "forward_passes": 6,
+      "latency_mean_ms": 20.770425982773304,
+      "latency_p95_ms": 24.663094291463494,
+      "latency_mean_ms_all_repeats": [
+        19.622413981705904,
+        20.268455985933542,
+        20.770425982773304,
+        20.974894035607576,
+        22.34280502423644
+      ],
+      "throughput_events_per_sec": 576.588773238482,
+      "within_10ms_bound": false
+    },
+    "gru": {
+      "forward_passes": 6,
+      "latency_mean_ms": 28.481255983933806,
+      "latency_p95_ms": 34.0717445127666,
+      "latency_mean_ms_all_repeats": [
+        24.448363007977605,
+        26.27208991907537,
+        28.481255983933806,
+        28.566298000514507,
+        29.415789982303977
+      ],
+      "throughput_events_per_sec": 344.29598650640526,
+      "within_10ms_bound": false
+    },
+    "transformer": {
+      "forward_passes": 6,
+      "latency_mean_ms": 26.05454101227224,
+      "latency_p95_ms": 51.90618536435068,
+      "latency_mean_ms_all_repeats": [
+        22.87954500876367,
+        25.21718098782003,
+        26.05454101227224,
+        29.565907968208194,
+        30.96536198630929
+      ],
+      "throughput_events_per_sec": 490.6484325287107,
+      "within_10ms_bound": false
+    }
+  }
+}

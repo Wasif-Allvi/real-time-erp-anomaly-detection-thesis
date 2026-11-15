@@ -1,0 +1,290 @@
+{
+  "lstm_confidence": {
+    "mean_score": {
+      "roc_auc": 0.5049229821889225,
+      "auprc": 0.06386791940280737,
+      "per_type_length_matched": {
+        "control_flow": 0.8937751123926192,
+        "data": 0.49261778359055564,
+        "resource": 0.5502055009044596,
+        "temporal": 0.5640343694798384,
+        "cross_entity": 0.6081204930476486
+      }
+    },
+    "runs": [
+      {
+        "roc_auc": 0.5023213170849299,
+        "auprc": 0.06292610825219339,
+        "per_type_length_matched": {
+          "control_flow": 0.8120931899030054,
+          "data": 0.5241776232597365,
+          "resource": 0.557791456531605,
+          "temporal": 0.5655966185634049,
+          "cross_entity": 0.6005729651864886
+        }
+      },
+      {
+        "roc_auc": 0.5037832965172507,
+        "auprc": 0.06654218467428982,
+        "per_type_length_matched": {
+          "control_flow": 0.9225578598056695,
+          "data": 0.5048273697879838,
+          "resource": 0.5132389882835721,
+          "temporal": 0.5359971530587766,
+          "cross_entity": 0.6118888658868992
+        }
+      },
+      {
+        "roc_auc": 0.4992421199406187,
+        "auprc": 0.06466417448760839,
+        "per_type_length_matched": {
+          "control_flow": 0.7876355322760892,
+          "data": 0.4505681049850993,
+          "resource": 0.545308634873152,
+          "temporal": 0.5685298006942888,
+          "cross_entity": 0.6048146758444606
+        }
+      }
+    ]
+  },
+  "lstm_joint_recon": {
+    "mean_score": {
+      "roc_auc": 0.6046207173424456,
+      "auprc": 0.10948164736357835,
+      "per_type_length_matched": {
+        "control_flow": 0.32206137020891806,
+        "data": 0.5893561476835542,
+        "resource": 0.5419113182100008,
+        "temporal": 0.4822551898192113,
+        "cross_entity": 0.8742797501983922
+      }
+    },
+    "runs": [
+      {
+        "roc_auc": 0.6108383750730724,
+        "auprc": 0.11309894589559338,
+        "per_type_length_matched": {
+          "control_flow": 0.3089666703633246,
+          "data": 0.598685724962245,
+          "resource": 0.54788011275384,
+          "temporal": 0.49586539281246467,
+          "cross_entity": 0.8760027429872684
+        }
+      },
+      {
+        "roc_auc": 0.5905889618609942,
+        "auprc": 0.10367230114175453,
+        "per_type_length_matched": {
+          "control_flow": 0.3278708103358556,
+          "data": 0.5794794719364292,
+          "resource": 0.5268531835062353,
+          "temporal": 0.45805618942071885,
+          "cross_entity": 0.8680864644791775
+        }
+      },
+      {
+        "roc_auc": 0.6046888170701141,
+        "auprc": 0.11272608492022326,
+        "per_type_length_matched": {
+          "control_flow": 0.3322982691110106,
+          "data": 0.595417585809298,
+          "resource": 0.5335621648225917,
+          "temporal": 0.4908792805724017,
+          "cross_entity": 0.8785861539523169
+        }
+      }
+    ]
+  },
+  "gru_confidence": {
+    "mean_score": {
+      "roc_auc": 0.516190364254052,
+      "auprc": 0.06534222472232953,
+      "per_type_length_matched": {
+        "control_flow": 0.9391160437798043,
+        "data": 0.43035075205394185,
+        "resource": 0.5988699048239979,
+        "temporal": 0.5675524037422606,
+        "cross_entity": 0.6018420280854294
+      }
+    },
+    "runs": [
+      {
+        "roc_auc": 0.51641370226139,
+        "auprc": 0.0705671319649231,
+        "per_type_length_matched": {
+          "control_flow": 0.9342876397976506,
+          "data": 0.5113249382965831,
+          "resource": 0.59471833911804,
+          "temporal": 0.5670081938774904,
+          "cross_entity": 0.5940691526067005
+        }
+      },
+      {
+        "roc_auc": 0.5123560905305501,
+        "auprc": 0.06604645135779938,
+        "per_type_length_matched": {
+          "control_flow": 0.9331530501693354,
+          "data": 0.4287755213693565,
+          "resource": 0.5877025446317283,
+          "temporal": 0.5577526610771985,
+          "cross_entity": 0.6119373857088638
+        }
+      },
+      {
+        "roc_auc": 0.5177037822248072,
+        "auprc": 0.06841302768120824,
+        "per_type_length_matched": {
+          "control_flow": 0.9209028944831645,
+          "data": 0.43471050749060386,
+          "resource": 0.5910289107493273,
+          "temporal": 0.558981841828228,
+          "cross_entity": 0.5951721698926957
+        }
+      }
+    ]
+  },
+  "gru_joint_recon": {
+    "mean_score": {
+      "roc_auc": 0.6117170354467422,
+      "auprc": 0.10761846577237857,
+      "per_type_length_matched": {
+        "control_flow": 0.37181269887308804,
+        "data": 0.590092149962787,
+        "resource": 0.5332285055002652,
+        "temporal": 0.5258157695960158,
+        "cross_entity": 0.8680713694234551
+      }
+    },
+    "runs": [
+      {
+        "roc_auc": 0.6145471309556343,
+        "auprc": 0.11142466496685027,
+        "per_type_length_matched": {
+          "control_flow": 0.3694070276310963,
+          "data": 0.5937824839715633,
+          "resource": 0.5472332483205175,
+          "temporal": 0.5250346450542327,
+          "cross_entity": 0.8720801849359969
+        }
+      },
+      {
+        "roc_auc": 0.6097473422031898,
+        "auprc": 0.10730831054551651,
+        "per_type_length_matched": {
+          "control_flow": 0.4117536660894193,
+          "data": 0.5919832525932983,
+          "resource": 0.5193567150536603,
+          "temporal": 0.5123641705706372,
+          "cross_entity": 0.8664777628264845
+        }
+      },
+      {
+        "roc_auc": 0.6010151224334804,
+        "auprc": 0.10311413639429594,
+        "per_type_length_matched": {
+          "control_flow": 0.30815624920024226,
+          "data": 0.5875269807287146,
+          "resource": 0.5138200157241749,
+          "temporal": 0.5164720133385937,
+          "cross_entity": 0.8657510437152813
+        }
+      }
+    ]
+  },
+  "transformer_confidence": {
+    "mean_score": {
+      "roc_auc": 0.4890034376699942,
+      "auprc": 0.062399400745807,
+      "per_type_length_matched": {
+        "control_flow": 0.9105806880902212,
+        "data": 0.5154157896747035,
+        "resource": 0.5069160802060761,
+        "temporal": 0.49907613188712946,
+        "cross_entity": 0.5947495083324708
+      }
+    },
+    "runs": [
+      {
+        "roc_auc": 0.48334040768492825,
+        "auprc": 0.06132456170536617,
+        "per_type_length_matched": {
+          "control_flow": 0.8985608626293475,
+          "data": 0.5141285598819919,
+          "resource": 0.5022333441996331,
+          "temporal": 0.44131950571073414,
+          "cross_entity": 0.5914135010178381
+        }
+      },
+      {
+        "roc_auc": 0.4894033594422508,
+        "auprc": 0.06849083346129392,
+        "per_type_length_matched": {
+          "control_flow": 0.9061191063187258,
+          "data": 0.5229667808003534,
+          "resource": 0.49204522937480427,
+          "temporal": 0.49930115126655183,
+          "cross_entity": 0.5910436721526412
+        }
+      },
+      {
+        "roc_auc": 0.4883910191967064,
+        "auprc": 0.06195468174295698,
+        "per_type_length_matched": {
+          "control_flow": 0.9121247536746202,
+          "data": 0.5175747641024953,
+          "resource": 0.4982601136487117,
+          "temporal": 0.49471749659497105,
+          "cross_entity": 0.5994570092813029
+        }
+      }
+    ]
+  },
+  "transformer_joint_recon": {
+    "mean_score": {
+      "roc_auc": 0.6296447944465258,
+      "auprc": 0.11987935872019101,
+      "per_type_length_matched": {
+        "control_flow": 0.5233443948713137,
+        "data": 0.6000730840972927,
+        "resource": 0.600729959666852,
+        "temporal": 0.5183673307546972,
+        "cross_entity": 0.8702321188282787
+      }
+    },
+    "runs": [
+      {
+        "roc_auc": 0.6292064224111484,
+        "auprc": 0.12159722466019521,
+        "per_type_length_matched": {
+          "control_flow": 0.5269443709852162,
+          "data": 0.5951295849174243,
+          "resource": 0.5769787851476857,
+          "temporal": 0.5363034569717348,
+          "cross_entity": 0.8803867784563365
+        }
+      },
+      {
+        "roc_auc": 0.6210390684127592,
+        "auprc": 0.12044792411566921,
+        "per_type_length_matched": {
+          "control_flow": 0.395801165300325,
+          "data": 0.6017236698539453,
+          "resource": 0.6044360070822706,
+          "temporal": 0.48098041042741785,
+          "cross_entity": 0.8717998481868682
+        }
+      },
+      {
+        "roc_auc": 0.612059698797637,
+        "auprc": 0.11538072809548079,
+        "per_type_length_matched": {
+          "control_flow": 0.4817569930815625,
+          "data": 0.6050620027726538,
+          "resource": 0.5427013621226358,
+          "temporal": 0.5104589404065416,
+          "cross_entity": 0.8573064382569092
+        }
+      }
+    ]
+  }
+}

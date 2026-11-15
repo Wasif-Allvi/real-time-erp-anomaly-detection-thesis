@@ -1,0 +1,488 @@
+{
+  "protocol": {
+    "warmup_runs": 10,
+    "measured_runs": 100,
+    "repeats": 5,
+    "reported": "median repeat",
+    "device": "cpu",
+    "torch_threads": 6,
+    "torch": "2.2.2+cpu",
+    "processor": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD"
+  },
+  "worst_case_26_events": {
+    "single": {
+      "lstm": [
+        {
+          "latency_mean_ms": 4.487267006188631,
+          "latency_std_ms": 0.5383053922849007,
+          "latency_p50_ms": 4.437349736690521,
+          "latency_p95_ms": 5.402429681271315,
+          "forward_passes": 1,
+          "events_in_prefix": 26,
+          "throughput_events_per_sec": 1241.0003240039587,
+          "within_10ms_bound": true
+        },
+        {
+          "latency_mean_ms": 4.504618011415005,
+          "latency_std_ms": 0.9091791985633291,
+          "latency_p50_ms": 4.399649798870087,
+          "latency_p95_ms": 6.03989427909255,
+          "forward_passes": 1,
+          "events_in_prefix": 26,
+          "throughput_events_per_sec": 1542.0408514056535,
+          "within_10ms_bound": true
+        },
+        {
+          "latency_mean_ms": 3.536226022988558,
+          "latency_std_ms": 0.33876983342317046,
+          "latency_p50_ms": 3.6720000207424164,
+          "latency_p95_ms": 3.877389058470726,
+          "forward_passes": 1,
+          "events_in_prefix": 26,
+          "throughput_events_per_sec": 1568.141711697892,
+          "within_10ms_bound": true
+        }
+      ],
+      "gru": [
+        {
+          "latency_mean_ms": 3.91573803499341,
+          "latency_std_ms": 0.24696317420179142,
+          "latency_p50_ms": 3.94314993172884,
+          "latency_p95_ms": 4.230789374560118,
+          "forward_passes": 1,
+          "events_in_prefix": 26,
+          "throughput_events_per_sec": 1868.6491457808374,
+          "within_10ms_bound": true
+        },
+        {
+          "latency_mean_ms": 3.8460018672049046,
+          "latency_std_ms": 0.5030922836449426,
+          "latency_p50_ms": 3.7018004804849625,
+          "latency_p95_ms": 4.882399830967187,
+          "forward_passes": 1,
+          "events_in_prefix": 26,
+          "throughput_events_per_sec": 2188.664372212968,
+          "within_10ms_bound": true
+        },
+        {
+          "latency_mean_ms": 3.5815670154988766,
+          "latency_std_ms": 0.48818817274543697,
+          "latency_p50_ms": 3.7182997912168503,
+          "latency_p95_ms": 4.198245331645012,
+          "forward_passes": 1,
+          "events_in_prefix": 26,
+          "throughput_events_per_sec": 2317.0032645287097,
+          "within_10ms_bound": true
+        }
+      ],
+      "transformer": [
+        {
+          "latency_mean_ms": 1.0583839565515518,
+          "latency_std_ms": 0.1417228070511683,
+          "latency_p50_ms": 0.9957998991012573,
+          "latency_p95_ms": 1.3712193816900253,
+          "forward_passes": 1,
+          "events_in_prefix": 26,
+          "throughput_events_per_sec": 10279.757155103533,
+          "within_10ms_bound": true
+        },
+        {
+          "latency_mean_ms": 0.9196030721068382,
+          "latency_std_ms": 0.12125902229844399,
+          "latency_p50_ms": 0.8709505200386047,
+          "latency_p95_ms": 1.1520043946802616,
+          "forward_passes": 1,
+          "events_in_prefix": 26,
+          "throughput_events_per_sec": 10232.118802355322,
+          "within_10ms_bound": true
+        },
+        {
+          "latency_mean_ms": 0.8849629573523998,
+          "latency_std_ms": 0.051870925273620846,
+          "latency_p50_ms": 0.876300036907196,
+          "latency_p95_ms": 0.9547514840960502,
+          "forward_passes": 1,
+          "events_in_prefix": 26,
+          "throughput_events_per_sec": 9640.325463008212,
+          "within_10ms_bound": true
+        }
+      ],
+      "autoencoder": [
+        {
+          "latency_mean_ms": 5.351659972220659,
+          "latency_std_ms": 1.958908453975955,
+          "latency_p50_ms": 4.977201111614704,
+          "latency_p95_ms": 8.545648958534,
+          "forward_passes": 1,
+          "events_in_prefix": 26,
+          "throughput_events_per_sec": 1693.8097022923596,
+          "within_10ms_bound": true
+        },
+        {
+          "latency_mean_ms": 5.139476153999567,
+          "latency_std_ms": 0.45605137624014347,
+          "latency_p50_ms": 5.2633509039878845,
+          "latency_p95_ms": 5.557290371507406,
+          "forward_passes": 1,
+          "events_in_prefix": 26,
+          "throughput_events_per_sec": 2313.764048216969,
+          "within_10ms_bound": true
+        },
+        {
+          "latency_mean_ms": 5.0314150750637054,
+          "latency_std_ms": 0.6443404948011513,
+          "latency_p50_ms": 5.276799201965332,
+          "latency_p95_ms": 5.4950508289039135,
+          "forward_passes": 1,
+          "events_in_prefix": 26,
+          "throughput_events_per_sec": 2434.215885803914,
+          "within_10ms_bound": true
+        }
+      ]
+    },
+    "three_runs": {
+      "lstm": {
+        "latency_mean_ms": 10.958786979317665,
+        "latency_std_ms": 1.218044715182149,
+        "latency_p50_ms": 11.348798871040344,
+        "latency_p95_ms": 12.473853491246699,
+        "forward_passes": 3,
+        "events_in_prefix": 26,
+        "throughput_events_per_sec": 587.2447395129188,
+        "within_10ms_bound": false
+      },
+      "gru": {
+        "latency_mean_ms": 10.15913899987936,
+        "latency_std_ms": 1.3323604134920428,
+        "latency_p50_ms": 10.65555028617382,
+        "latency_p95_ms": 11.76621476188302,
+        "forward_passes": 3,
+        "events_in_prefix": 26,
+        "throughput_events_per_sec": 787.6189838480145,
+        "within_10ms_bound": false
+      },
+      "transformer": {
+        "latency_mean_ms": 3.7029749900102615,
+        "latency_std_ms": 0.6889852433410167,
+        "latency_p50_ms": 3.387649543583393,
+        "latency_p95_ms": 5.243420973420142,
+        "forward_passes": 3,
+        "events_in_prefix": 26,
+        "throughput_events_per_sec": 2479.767230820509,
+        "within_10ms_bound": true
+      },
+      "autoencoder": {
+        "latency_mean_ms": 15.61835316941142,
+        "latency_std_ms": 1.0630411623742104,
+        "latency_p50_ms": 15.803650952875614,
+        "latency_p95_ms": 17.104436177760363,
+        "forward_passes": 3,
+        "events_in_prefix": 26,
+        "throughput_events_per_sec": 820.6211847022047,
+        "within_10ms_bound": false
+      }
+    },
+    "pair": {
+      "lstm": {
+        "latency_mean_ms": 8.848383035510778,
+        "latency_std_ms": 0.9568647073212503,
+        "latency_p50_ms": 9.225249290466309,
+        "latency_p95_ms": 9.820784721523523,
+        "forward_passes": 2,
+        "events_in_prefix": 26,
+        "throughput_events_per_sec": 1010.2348152997791,
+        "within_10ms_bound": true
+      },
+      "gru": {
+        "latency_mean_ms": 8.76831704750657,
+        "latency_std_ms": 1.06089481470007,
+        "latency_p50_ms": 8.951249532401562,
+        "latency_p95_ms": 10.259184520691633,
+        "forward_passes": 2,
+        "events_in_prefix": 26,
+        "throughput_events_per_sec": 1172.2849705078354,
+        "within_10ms_bound": true
+      },
+      "transformer": {
+        "latency_mean_ms": 6.033322028815746,
+        "latency_std_ms": 0.7166569638390275,
+        "latency_p50_ms": 6.36530015617609,
+        "latency_p95_ms": 6.854900065809488,
+        "forward_passes": 2,
+        "events_in_prefix": 26,
+        "throughput_events_per_sec": 1921.4184300694073,
+        "within_10ms_bound": true
+      }
+    },
+    "all": {
+      "lstm": {
+        "latency_mean_ms": 26.8912760540843,
+        "latency_std_ms": 2.7543430091111625,
+        "latency_p50_ms": 27.345100417733192,
+        "latency_p95_ms": 30.77473482117057,
+        "forward_passes": 6,
+        "events_in_prefix": 26,
+        "throughput_events_per_sec": 328.6116730854509,
+        "within_10ms_bound": false
+      },
+      "gru": {
+        "latency_mean_ms": 30.2911339700222,
+        "latency_std_ms": 6.2445276969355294,
+        "latency_p50_ms": 29.67754937708378,
+        "latency_p95_ms": 36.73100937157869,
+        "forward_passes": 6,
+        "events_in_prefix": 26,
+        "throughput_events_per_sec": 384.8615803647951,
+        "within_10ms_bound": false
+      },
+      "transformer": {
+        "latency_mean_ms": 19.749610032886267,
+        "latency_std_ms": 2.377359372098036,
+        "latency_p50_ms": 19.802049733698368,
+        "latency_p95_ms": 23.65991910919547,
+        "forward_passes": 6,
+        "events_in_prefix": 26,
+        "throughput_events_per_sec": 530.5316136227444,
+        "within_10ms_bound": false
+      }
+    }
+  },
+  "median_case_4_events": {
+    "single": {
+      "lstm": [
+        {
+          "latency_mean_ms": 1.0688660480082035,
+          "latency_std_ms": 0.14144184011258823,
+          "latency_p50_ms": 1.066950149834156,
+          "latency_p95_ms": 1.2401302345097065,
+          "forward_passes": 1,
+          "events_in_prefix": 4,
+          "throughput_events_per_sec": 8552.55032545863,
+          "within_10ms_bound": true
+        },
+        {
+          "latency_mean_ms": 1.082110907882452,
+          "latency_std_ms": 0.16368470165316598,
+          "latency_p50_ms": 1.1236006394028664,
+          "latency_p95_ms": 1.3260895386338234,
+          "forward_passes": 1,
+          "events_in_prefix": 4,
+          "throughput_events_per_sec": 9900.815482439148,
+          "within_10ms_bound": true
+        },
+        {
+          "latency_mean_ms": 1.062926985323429,
+          "latency_std_ms": 0.07422749742291265,
+          "latency_p50_ms": 1.0524000972509384,
+          "latency_p95_ms": 1.163550652563572,
+          "forward_passes": 1,
+          "events_in_prefix": 4,
+          "throughput_events_per_sec": 9371.71162327693,
+          "within_10ms_bound": true
+        }
+      ],
+      "gru": [
+        {
+          "latency_mean_ms": 0.9262780286371708,
+          "latency_std_ms": 0.09085935095209126,
+          "latency_p50_ms": 0.941750593483448,
+          "latency_p95_ms": 1.0529905557632444,
+          "forward_passes": 1,
+          "events_in_prefix": 4,
+          "throughput_events_per_sec": 12685.82751006589,
+          "within_10ms_bound": true
+        },
+        {
+          "latency_mean_ms": 0.9104938991367817,
+          "latency_std_ms": 0.04001806950344294,
+          "latency_p50_ms": 0.9108996018767357,
+          "latency_p95_ms": 0.97084641456604,
+          "forward_passes": 1,
+          "events_in_prefix": 4,
+          "throughput_events_per_sec": 13649.582736308512,
+          "within_10ms_bound": true
+        },
+        {
+          "latency_mean_ms": 0.916524026542902,
+          "latency_std_ms": 0.11473208292086148,
+          "latency_p50_ms": 0.9356997907161713,
+          "latency_p95_ms": 1.0980444960296154,
+          "forward_passes": 1,
+          "events_in_prefix": 4,
+          "throughput_events_per_sec": 13850.469390580269,
+          "within_10ms_bound": true
+        }
+      ],
+      "transformer": [
+        {
+          "latency_mean_ms": 0.9029159881174564,
+          "latency_std_ms": 0.0684630944724072,
+          "latency_p50_ms": 0.9045004844665527,
+          "latency_p95_ms": 0.9816798381507397,
+          "forward_passes": 1,
+          "events_in_prefix": 4,
+          "throughput_events_per_sec": 27537.18579679486,
+          "within_10ms_bound": true
+        },
+        {
+          "latency_mean_ms": 0.8358949981629848,
+          "latency_std_ms": 0.10358223373219391,
+          "latency_p50_ms": 0.8621504530310631,
+          "latency_p95_ms": 0.9596856310963631,
+          "forward_passes": 1,
+          "events_in_prefix": 4,
+          "throughput_events_per_sec": 27139.389541069428,
+          "within_10ms_bound": true
+        },
+        {
+          "latency_mean_ms": 0.8123520575463772,
+          "latency_std_ms": 0.09582382986947466,
+          "latency_p50_ms": 0.8477997034788132,
+          "latency_p95_ms": 0.9219062514603138,
+          "forward_passes": 1,
+          "events_in_prefix": 4,
+          "throughput_events_per_sec": 26993.194605587378,
+          "within_10ms_bound": true
+        }
+      ],
+      "autoencoder": [
+        {
+          "latency_mean_ms": 5.287053938955069,
+          "latency_std_ms": 0.18109145933368595,
+          "latency_p50_ms": 5.269549787044525,
+          "latency_p95_ms": 5.557368788868189,
+          "forward_passes": 1,
+          "events_in_prefix": 4,
+          "throughput_events_per_sec": 2246.545442787913,
+          "within_10ms_bound": true
+        },
+        {
+          "latency_mean_ms": 5.00677702948451,
+          "latency_std_ms": 0.6175036136861186,
+          "latency_p50_ms": 5.289450287818909,
+          "latency_p95_ms": 5.567176453769207,
+          "forward_passes": 1,
+          "events_in_prefix": 4,
+          "throughput_events_per_sec": 2098.440050782929,
+          "within_10ms_bound": true
+        },
+        {
+          "latency_mean_ms": 6.0574511252343655,
+          "latency_std_ms": 0.825876846097569,
+          "latency_p50_ms": 6.1448002234101295,
+          "latency_p95_ms": 7.179534621536732,
+          "forward_passes": 1,
+          "events_in_prefix": 4,
+          "throughput_events_per_sec": 2023.4080489236374,
+          "within_10ms_bound": true
+        }
+      ]
+    },
+    "three_runs": {
+      "lstm": {
+        "latency_mean_ms": 3.474888950586319,
+        "latency_std_ms": 0.23920550495456827,
+        "latency_p50_ms": 3.465300425887108,
+        "latency_p95_ms": 3.820789884775877,
+        "forward_passes": 3,
+        "events_in_prefix": 4,
+        "throughput_events_per_sec": 3275.636744349441,
+        "within_10ms_bound": true
+      },
+      "gru": {
+        "latency_mean_ms": 2.7465680614113808,
+        "latency_std_ms": 0.281963465979327,
+        "latency_p50_ms": 2.826000563800335,
+        "latency_p95_ms": 3.1247402541339397,
+        "forward_passes": 3,
+        "events_in_prefix": 4,
+        "throughput_events_per_sec": 4376.602843388938,
+        "within_10ms_bound": true
+      },
+      "transformer": {
+        "latency_mean_ms": 2.608862090855837,
+        "latency_std_ms": 0.17318163549780027,
+        "latency_p50_ms": 2.6207007467746735,
+        "latency_p95_ms": 2.8016352094709873,
+        "forward_passes": 3,
+        "events_in_prefix": 4,
+        "throughput_events_per_sec": 8649.431740845868,
+        "within_10ms_bound": true
+      },
+      "autoencoder": {
+        "latency_mean_ms": 16.32649689912796,
+        "latency_std_ms": 1.8788631712490451,
+        "latency_p50_ms": 16.597500070929527,
+        "latency_p95_ms": 18.800710048526525,
+        "forward_passes": 3,
+        "events_in_prefix": 4,
+        "throughput_events_per_sec": 704.4795322501097,
+        "within_10ms_bound": false
+      }
+    },
+    "pair": {
+      "lstm": {
+        "latency_mean_ms": 7.287067975848913,
+        "latency_std_ms": 0.9207651302825992,
+        "latency_p50_ms": 7.187849842011929,
+        "latency_p95_ms": 8.562225196510553,
+        "forward_passes": 2,
+        "events_in_prefix": 4,
+        "throughput_events_per_sec": 1690.1060601177821,
+        "within_10ms_bound": true
+      },
+      "gru": {
+        "latency_mean_ms": 7.02813696116209,
+        "latency_std_ms": 0.8197629608495346,
+        "latency_p50_ms": 7.088400423526764,
+        "latency_p95_ms": 8.312675543129444,
+        "forward_passes": 2,
+        "events_in_prefix": 4,
+        "throughput_events_per_sec": 1705.8198529570302,
+        "within_10ms_bound": true
+      },
+      "transformer": {
+        "latency_mean_ms": 7.08730012178421,
+        "latency_std_ms": 0.7880116233416904,
+        "latency_p50_ms": 7.143200375139713,
+        "latency_p95_ms": 8.433505333960056,
+        "forward_passes": 2,
+        "events_in_prefix": 4,
+        "throughput_events_per_sec": 1663.8385748025908,
+        "within_10ms_bound": true
+      }
+    },
+    "all": {
+      "lstm": {
+        "latency_mean_ms": 20.322005804628134,
+        "latency_std_ms": 2.613932203827545,
+        "latency_p50_ms": 20.2848007902503,
+        "latency_p95_ms": 24.910203740000725,
+        "forward_passes": 6,
+        "events_in_prefix": 4,
+        "throughput_events_per_sec": 655.6092162343782,
+        "within_10ms_bound": false
+      },
+      "gru": {
+        "latency_mean_ms": 18.19681005552411,
+        "latency_std_ms": 1.325700747660838,
+        "latency_p50_ms": 18.649849109351635,
+        "latency_p95_ms": 19.27680103108287,
+        "forward_passes": 6,
+        "events_in_prefix": 4,
+        "throughput_events_per_sec": 694.7376726638558,
+        "within_10ms_bound": false
+      },
+      "transformer": {
+        "latency_mean_ms": 19.465930126607418,
+        "latency_std_ms": 1.929802265013079,
+        "latency_p50_ms": 19.055450335144997,
+        "latency_p95_ms": 22.551544290035963,
+        "forward_passes": 6,
+        "events_in_prefix": 4,
+        "throughput_events_per_sec": 720.8405526050398,
+        "within_10ms_bound": false
+      }
+    }
+  }
+}

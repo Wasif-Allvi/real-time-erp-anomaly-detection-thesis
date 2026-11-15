@@ -1,0 +1,80 @@
+{
+  "prediction": {
+    "lstm": {
+      "model": "lstm",
+      "test_acc_mean": 86.66996432532902,
+      "test_acc_std": 0.12582134947047113,
+      "test_f1w_mean": 0.842441544196638,
+      "test_f1m_mean": 0.44532443974778274,
+      "test_f1m_std": 0.005883634853937088,
+      "test_f1m_all_37_classes_mean": 0.40921705274120573,
+      "n_runs": 3
+    },
+    "gru": {
+      "model": "gru",
+      "test_acc_mean": 86.76139940642143,
+      "test_acc_std": 0.11914417932810031,
+      "test_f1w_mean": 0.8437200429394487,
+      "test_f1m_mean": 0.4465513690723397,
+      "test_f1m_std": 0.0036494689486199676,
+      "test_f1m_all_37_classes_mean": 0.41034450130971756,
+      "n_runs": 3
+    },
+    "transformer": {
+      "model": "transformer",
+      "test_acc_mean": 87.16910993194831,
+      "test_acc_std": 0.053249152106996996,
+      "test_f1w_mean": 0.8454207456227767,
+      "test_f1m_mean": 0.44539559238025844,
+      "test_f1m_std": 0.00182196181607748,
+      "test_f1m_all_37_classes_mean": 0.40928243624131855,
+      "n_runs": 3
+    }
+  },
+  "latency": {
+    "lstm": {
+      "latency_mean_ms": 4.487267006188631,
+      "latency_std_ms": 0.5383053922849007,
+      "latency_p50_ms": 4.437349736690521,
+      "latency_p95_ms": 5.402429681271315,
+      "forward_passes": 1,
+      "events_in_prefix": 26,
+      "throughput_events_per_sec": 1241.0003240039587,
+      "within_10ms_bound": true,
+      "parameters": 219308
+    },
+    "gru": {
+      "latency_mean_ms": 3.91573803499341,
+      "latency_std_ms": 0.24696317420179142,
+      "latency_p50_ms": 3.94314993172884,
+      "latency_p95_ms": 4.230789374560118,
+      "forward_passes": 1,
+      "events_in_prefix": 26,
+      "throughput_events_per_sec": 1868.6491457808374,
+      "within_10ms_bound": true,
+      "parameters": 167852
+    },
+    "transformer": {
+      "latency_mean_ms": 1.0583839565515518,
+      "latency_std_ms": 0.1417228070511683,
+      "latency_p50_ms": 0.9957998991012573,
+      "latency_p95_ms": 1.3712193816900253,
+      "forward_passes": 1,
+      "events_in_prefix": 26,
+      "throughput_events_per_sec": 10279.757155103533,
+      "within_10ms_bound": true,
+      "parameters": 74924
+    },
+    "autoencoder": {
+      "latency_mean_ms": 5.351659972220659,
+      "latency_std_ms": 1.958908453975955,
+      "latency_p50_ms": 4.977201111614704,
+      "latency_p95_ms": 8.545648958534,
+      "forward_passes": 1,
+      "events_in_prefix": 26,
+      "throughput_events_per_sec": 1693.8097022923596,
+      "within_10ms_bound": true,
+      "parameters": 90823
+    }
+  }
+}

@@ -1,0 +1,335 @@
+{
+  "cross_entity_overrun_only": {
+    "altered_cases": 24,
+    "below_budget_cases": [
+      "declaration 37039",
+      "declaration 41341"
+    ],
+    "amount_to_budget_ratio_after_inflation": {
+      "declaration 37039": 0.30809241813689303,
+      "declaration 41341": 0.5983132609875561
+    },
+    "median_ratio_all_altered": 4.907120576905596,
+    "prefixes_left_out": 22,
+    "per_type_auc": {
+      "lstm_confidence": {
+        "all_altered_cases": {
+          "auc": 0.6007390107994341,
+          "ci95": [
+            0.5780305986878416,
+            0.6240212109273972
+          ],
+          "n_prefixes": 242
+        },
+        "overrun_cases_only": {
+          "auc": 0.602156088959297,
+          "ci95": [
+            0.5772231716103753,
+            0.6251033611512895
+          ],
+          "n_prefixes": 220
+        }
+      },
+      "lstm_joint_recon": {
+        "all_altered_cases": {
+          "auc": 0.8524932719180209,
+          "ci95": [
+            0.8015956856724101,
+            0.8957552128902974
+          ],
+          "n_prefixes": 242
+        },
+        "overrun_cases_only": {
+          "auc": 0.8508677633347006,
+          "ci95": [
+            0.80153183234153,
+            0.8980172612137332
+          ],
+          "n_prefixes": 220
+        }
+      },
+      "gru_confidence": {
+        "all_altered_cases": {
+          "auc": 0.5899277162474554,
+          "ci95": [
+            0.563494309938449,
+            0.613474362892951
+          ],
+          "n_prefixes": 242
+        },
+        "overrun_cases_only": {
+          "auc": 0.589444923784872,
+          "ci95": [
+            0.560393526803668,
+            0.6162784049014897
+          ],
+          "n_prefixes": 220
+        }
+      },
+      "gru_joint_recon": {
+        "all_altered_cases": {
+          "auc": 0.8680821516061139,
+          "ci95": [
+            0.8272513103555078,
+            0.9051335305605612
+          ],
+          "n_prefixes": 242
+        },
+        "overrun_cases_only": {
+          "auc": 0.8680367944855419,
+          "ci95": [
+            0.8250293788844709,
+            0.9086741365096497
+          ],
+          "n_prefixes": 220
+        }
+      },
+      "transformer_confidence": {
+        "all_altered_cases": {
+          "auc": 0.5910921919746058,
+          "ci95": [
+            0.5645892848060561,
+            0.6188962134228503
+          ],
+          "n_prefixes": 242
+        },
+        "overrun_cases_only": {
+          "auc": 0.5937448431613838,
+          "ci95": [
+            0.5665804832873442,
+            0.6223728756711217
+          ],
+          "n_prefixes": 220
+        }
+      },
+      "transformer_joint_recon": {
+        "all_altered_cases": {
+          "auc": 0.8739541282820964,
+          "ci95": [
+            0.8362104443491136,
+            0.9110958326172968
+          ],
+          "n_prefixes": 242
+        },
+        "overrun_cases_only": {
+          "auc": 0.8746234034427643,
+          "ci95": [
+            0.8335531887907562,
+            0.9189342407336039
+          ],
+          "n_prefixes": 220
+        }
+      },
+      "autoencoder": {
+        "all_altered_cases": {
+          "auc": 0.9747653797053445,
+          "ci95": [
+            0.9460061169939404,
+            0.9962216430440081
+          ],
+          "n_prefixes": 242
+        },
+        "overrun_cases_only": {
+          "auc": 0.9811996397874557,
+          "ci95": [
+            0.9570339489414336,
+            0.9992010403244644
+          ],
+          "n_prefixes": 220
+        }
+      }
+    },
+    "autoencoder_detection_rate_pct": {
+      "all_altered_cases": 73.36694214876034,
+      "overrun_cases_only": 74.98
+    }
+  },
+  "temporal_subgroups": {
+    "temporal_cases": 67,
+    "subgroups": {
+      "temporal_gap_only": {
+        "cases": 39,
+        "anomalous_prefixes": 119
+      },
+      "temporal_reordered": {
+        "cases": 28,
+        "anomalous_prefixes": 130
+      }
+    },
+    "reordered_cases": [
+      "declaration 100338",
+      "declaration 109913",
+      "declaration 112452",
+      "declaration 113613",
+      "declaration 114429",
+      "declaration 115778",
+      "declaration 119903",
+      "declaration 120201",
+      "declaration 120953",
+      "declaration 121185",
+      "declaration 128656",
+      "declaration 129479",
+      "declaration 129753",
+      "declaration 135089",
+      "declaration 136476",
+      "declaration 137117",
+      "declaration 139556",
+      "declaration 141400",
+      "declaration 144824",
+      "declaration 145027",
+      "declaration 42201",
+      "declaration 69643",
+      "declaration 84109",
+      "declaration 86981",
+      "declaration 88490",
+      "declaration 92440",
+      "declaration 96864",
+      "declaration 98248"
+    ],
+    "per_type_auc": {
+      "lstm_confidence": {
+        "temporal_gap_only": {
+          "auc": 0.3331928680652634,
+          "ci95": [
+            0.2862785236439967,
+            0.38294550535618643
+          ],
+          "n_prefixes": 119
+        },
+        "temporal_reordered": {
+          "auc": 0.47441469387755103,
+          "ci95": [
+            0.44684249634148016,
+            0.5068105696905484
+          ],
+          "n_prefixes": 130
+        }
+      },
+      "lstm_joint_recon": {
+        "temporal_gap_only": {
+          "auc": 0.3779844663917921,
+          "ci95": [
+            0.3018011737373085,
+            0.4639496172014843
+          ],
+          "n_prefixes": 119
+        },
+        "temporal_reordered": {
+          "auc": 0.5766595918367347,
+          "ci95": [
+            0.5265656782615998,
+            0.6284432178086706
+          ],
+          "n_prefixes": 130
+        }
+      },
+      "gru_confidence": {
+        "temporal_gap_only": {
+          "auc": 0.3498165540421194,
+          "ci95": [
+            0.2970115332865385,
+            0.3987247741053208
+          ],
+          "n_prefixes": 119
+        },
+        "temporal_reordered": {
+          "auc": 0.4760587755102041,
+          "ci95": [
+            0.4305714177356603,
+            0.5302236241138297
+          ],
+          "n_prefixes": 130
+        }
+      },
+      "gru_joint_recon": {
+        "temporal_gap_only": {
+          "auc": 0.3739320013525039,
+          "ci95": [
+            0.29955812985367464,
+            0.45688930373851677
+          ],
+          "n_prefixes": 119
+        },
+        "temporal_reordered": {
+          "auc": 0.6123885714285714,
+          "ci95": [
+            0.5589180645997811,
+            0.663056563377912
+          ],
+          "n_prefixes": 130
+        }
+      },
+      "transformer_confidence": {
+        "temporal_gap_only": {
+          "auc": 0.3415072343818603,
+          "ci95": [
+            0.28929947928768546,
+            0.3891518217506062
+          ],
+          "n_prefixes": 119
+        },
+        "temporal_reordered": {
+          "auc": 0.4222661224489796,
+          "ci95": [
+            0.36977920512494566,
+            0.48062669634106053
+          ],
+          "n_prefixes": 130
+        }
+      },
+      "transformer_joint_recon": {
+        "temporal_gap_only": {
+          "auc": 0.3956225302925547,
+          "ci95": [
+            0.3067556381115772,
+            0.48884908513522857
+          ],
+          "n_prefixes": 119
+        },
+        "temporal_reordered": {
+          "auc": 0.5883820408163265,
+          "ci95": [
+            0.5369415823224334,
+            0.6413096831519731
+          ],
+          "n_prefixes": 130
+        }
+      },
+      "autoencoder": {
+        "temporal_gap_only": {
+          "auc": 0.40560481652880886,
+          "ci95": [
+            0.3263332703997631,
+            0.49193972084200727
+          ],
+          "n_prefixes": 119
+        },
+        "temporal_reordered": {
+          "auc": 0.4940995918367347,
+          "ci95": [
+            0.39989411047700085,
+            0.5907289001463341
+          ],
+          "n_prefixes": 130
+        }
+      }
+    },
+    "detection_rate_pct": {
+      "gru_confidence": {
+        "temporal_gap_only": 86.35546218487399,
+        "temporal_reordered": 96.80461538461537,
+        "normal_flagged_pct": 93.07299056919912
+      },
+      "gru_joint_recon": {
+        "temporal_gap_only": 19.227731092436976,
+        "temporal_reordered": 21.39461538461538,
+        "normal_flagged_pct": 21.592843123174877
+      },
+      "autoencoder": {
+        "temporal_gap_only": 1.1739495798319326,
+        "temporal_reordered": 7.693076923076923,
+        "normal_flagged_pct": 0.49325961032122173
+      }
+    }
+  }
+}
