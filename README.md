@@ -29,7 +29,7 @@ The models are trained and tested on the public BPI Challenge 2020 travel expens
 | Main libraries | PyTorch 2.2.2, scikit-learn 1.4.2, pm4py 2.7.11.4, pandas 2.2.2 |
 | Hardware used | AMD Ryzen 5 PRO 7530U (6 cores), 16 GB RAM |
 | GPU | not needed, everything runs on CPU |
-| Frozen version | release `v2.0-submission` (the version described in the thesis) |
+| Final version | release `v2.0-submission` (the version described in the thesis) |
 | Earlier version | release `v1.0-submission` (first configuration, see below) |
 
 ## What changed in v2.0
