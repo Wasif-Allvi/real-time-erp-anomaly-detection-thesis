@@ -3,11 +3,14 @@
 # Thesis: Deep Sequential Models for ERP Anomaly Detection
 # Mustafa Wasif Allvi — University of Potsdam, M.Sc. Data Science
 # ============================================================
-# Final evaluation and latency benchmarking (thesis Section 5.7).
+# Evaluation and latency benchmarking of the first configuration
+# (thesis Section 6.8). 18_last_real_evaluation.py repeats it for the
+# classifiers reported in the thesis.
 #
 # Produces:
 #   1. Next-activity prediction on test set (accuracy, F1-macro)
 #   2. Anomaly detection metrics from 07_scoring.py results
+#      (earlier case-level evaluation)
 #   3. Latency and throughput for all models including autoencoder
 #   4. Final comparison tables saved to JSON
 # ============================================================

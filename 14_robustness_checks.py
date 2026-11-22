@@ -4,7 +4,8 @@
 # Mustafa Wasif Allvi, University of Potsdam, M.Sc. Data Science
 # ============================================================
 # Two robustness checks of the event-level detection results
-# produced by 13_event_level_evaluation.py:
+# produced by 13_event_level_evaluation.py (classifier scores of the
+# first configuration):
 #
 #   A. Cross-entity class restricted to the altered cases in which
 #      the fivefold inflation pushes the declared amount above the

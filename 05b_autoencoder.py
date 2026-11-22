@@ -3,20 +3,21 @@
 # Thesis: Deep Sequential Models for ERP Anomaly Detection
 # Mustafa Wasif Allvi — University of Potsdam, M.Sc. Data Science
 # ============================================================
-# Option B: Separate GRU autoencoder trained on NORMAL sequences.
+# Dedicated GRU sequence-to-sequence autoencoder (thesis Section 6.5.2),
+# trained on NORMAL sequences only.
 # Reconstructs NUMERICAL features only (indices 7-13).
 # Categorical features (indices 0-6) are used as encoder input
 # but excluded from the reconstruction loss and scoring.
 #
-# This is the correct design because:
-#   - Categorical features are label-encoded integers (0-825)
+# Reasons for this design:
+#   - Categorical features are label-encoded integers (up to 824)
 #     which cannot be meaningfully reconstructed by MSE
 #   - Numerical features are min-max scaled to [0,1]
 #     which Sigmoid output matches exactly
 #   - Financial anomalies manifest in numerical features
 #     so numerical-only reconstruction targets the right signal
 #
-# Reference: Chandola et al. (2009) \cite{Chandola2009}
+# Reference: Chandola et al. (2009), survey of anomaly detection.
 # ============================================================
 
 import os
@@ -108,8 +109,8 @@ class GRUAutoencoder(nn.Module):
     Output bounds : Sigmoid clamps reconstruction to [0,1]
                     matching min-max scaled numerical inputs
 
-    This design is correct because:
-    - Categorical integers (0-825) cannot be reconstructed by MSE
+    Reasons for this design:
+    - Categorical integers (up to 824) cannot be reconstructed by MSE
     - Numerical features are all in [0,1] range
     - Financial anomalies appear in numerical features
     """
@@ -273,7 +274,7 @@ def train_one_run(run_idx: int,
 
 
 # ============================================================
-# Event-level reconstruction scoring
+# Reconstruction score per prefix
 # ============================================================
 
 def compute_event_level_scores(model: nn.Module,
@@ -315,7 +316,7 @@ def run_autoencoder(save: bool = True) -> dict:
     config.make_output_dirs()
 
     print("=" * 60)
-    print("05b_autoencoder.py — Separate Autoencoder (Option B)")
+    print("05b_autoencoder.py — Dedicated autoencoder")
     print("=" * 60)
     print(f"  Architecture    : GRU seq2seq + LayerNorm + Sigmoid")
     print(f"  Encoder input   : {MODEL_INPUT_DIM} features (full)")

@@ -242,9 +242,6 @@ The autoencoder alone needs 5.35 (5.29) ms, and three runs of it need 15.62 (16.
 ├── 09_baseline.py                  │ first, case-level evaluation,
 ├── 11_per_type_auc.py              │ kept for reference
 ├── generate_plots.py               ┘
-├── check_results.py                ┐
-├── debug_recon.py                  ├ small helpers used during development
-├── extract_training_summary.py     ┘
 ├── thesis-code-prototype.ipynb     first prototype (single LSTM, 81.22 % accuracy)
 ├── requirements.txt
 ├── LICENSE

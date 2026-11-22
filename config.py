@@ -151,6 +151,9 @@ TRANSFORMER_CONFIG = {
 # Sigmoid on output head bounds reconstruction to [0,1]
 # Financial features weighted 2x to amplify anomaly signal
 
+# COMPOSITE_ALPHA, COMPOSITE_BETA and ALPHA_GRID are used by the earlier
+# evaluation in 07_scoring.py. 13_event_level_evaluation.py evaluates
+# alpha = 0, 0.1, ..., 1.
 COMPOSITE_ALPHA  = 0.5
 COMPOSITE_BETA   = 0.5
 RECON_HIDDEN_DIM = 64

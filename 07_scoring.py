@@ -3,7 +3,10 @@
 # Thesis: Deep Sequential Models for ERP Anomaly Detection
 # Mustafa Wasif Allvi — University of Potsdam, M.Sc. Data Science
 # ============================================================
-# Composite anomaly scoring (thesis Section 5.6).
+# Composite anomaly scoring (thesis Section 6.6).
+# Earlier, case-level evaluation, kept for reference. The thesis reports
+# the event-level evaluation of 13_event_level_evaluation.py and
+# 18_last_real_evaluation.py.
 #
 # For each trained model (LSTM, GRU, Transformer):
 #   1. Load best weights from 05_train.py

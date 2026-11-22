@@ -10,7 +10,6 @@
 # Core Deep Learning
 # ----------------------------------------------------------
 torch==2.2.2
-torchvision==0.17.2          # required by some torch utilities
 
 # ----------------------------------------------------------
 # Process Mining / XES Loading
@@ -28,28 +27,22 @@ scikit-learn==1.4.2
 # ----------------------------------------------------------
 # Evaluation and Metrics
 # ----------------------------------------------------------
-# All metrics computed via scikit-learn:
-# accuracy_score, f1_score, roc_auc_score, precision_recall_curve
+# Metrics come from scikit-learn, the statistical tests in
+# 10_significance.py from scipy.
 
 # ----------------------------------------------------------
 # Serialization and Config
 # ----------------------------------------------------------
 joblib==1.4.2                 # scaler / encoder persistence
-pyyaml==6.0.1                 # optional: config as YAML if needed
-
-# ----------------------------------------------------------
-# Logging and Progress
-# ----------------------------------------------------------
-tqdm==4.66.4                  # progress bars for training loops
 
 # ----------------------------------------------------------
 # Visualization (for Chapter 7 figures)
 # ----------------------------------------------------------
 matplotlib==3.9.0
-seaborn==0.13.2
+seaborn==0.13.2               # only used by generate_plots.py (first version)
 
 # ----------------------------------------------------------
 # Reproducibility
 # ----------------------------------------------------------
-# All random seeds controlled in config.py via:
-# torch.manual_seed, numpy.random.seed, random.seed
+# The seed values are set in config.py. The scripts apply them with
+# random.seed, numpy.random.seed and torch.manual_seed.

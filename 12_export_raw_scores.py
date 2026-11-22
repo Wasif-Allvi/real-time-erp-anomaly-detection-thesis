@@ -1,6 +1,8 @@
 # ============================================================
 # 12_export_raw_scores.py
-# Per-run raw anomaly scores for the final evaluation (13_...)
+# Per-run raw anomaly scores for the event-level evaluation (13_...)
+# The classifier scores belong to the first configuration. The
+# autoencoder scores are also used by 18_last_real_evaluation.py.
 #
 # For every trained model run, scores two prefix sets:
 #   - the injected test prefixes   (results/preprocessed/test_injected.joblib)

@@ -3,7 +3,7 @@
 # Thesis: Deep Sequential Models for ERP Anomaly Detection
 # Mustafa Wasif Allvi — University of Potsdam, M.Sc. Data Science
 # ============================================================
-# Prefix sequence creation (thesis Section 5.2).
+# Prefix sequence creation (thesis Section 6.2).
 # Creates sequences for train, val, and test splits.
 # ============================================================
 

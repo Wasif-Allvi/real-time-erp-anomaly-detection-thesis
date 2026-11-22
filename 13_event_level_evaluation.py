@@ -1,6 +1,9 @@
 # ============================================================
 # 13_event_level_evaluation.py
-# Final anomaly-detection evaluation reported in Chapter 7
+# Event-level anomaly-detection evaluation (thesis Sections 6.8, 7.2 to 7.4)
+# Applied here to the first configuration. 18_last_real_evaluation.py
+# runs the same evaluation for the classifiers reported in the thesis.
+# The autoencoder results are identical in both.
 #
 # 1. Event-level ground truth. A prefix counts as anomalous only
 #    if it contains at least one event altered by the injection

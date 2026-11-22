@@ -4,9 +4,12 @@
 # Mustafa Wasif Allvi — University of Potsdam, M.Sc. Data Science
 # ============================================================
 # Training pipeline with validation and early stopping.
+# Trains the first configuration (04_models.py). 17_padding_robustness.py
+# reuses train_one_run() for the classifiers reported in the thesis.
 #
 # Key design decisions:
-#   - No fixed epoch count — trains until early stopping fires
+#   - No fixed epoch count: training runs until early stopping fires
+#     (MAX_EPOCHS = 300 is only a safety ceiling)
 #   - Early stopping monitors VALIDATION loss (patience=15 epochs)
 #   - Best model weights saved at epoch with lowest val loss
 #   - Val metrics (loss, accuracy, F1-macro) logged every epoch
@@ -14,7 +17,7 @@
 #   - Reconstruction target: numerical features only (indices 7-13)
 #   - Reconstruction output bounded to [0,1] via Sigmoid
 #
-# Convergence scenarios detected automatically:
+# How early stopping handles the possible training courses:
 #   A. Good: train loss down, val loss down then plateau -> stop
 #   B. Overfit: train loss down, val loss up -> early stop saves best
 #   C. Undertraining: both still decreasing -> MAX_EPOCHS ceiling

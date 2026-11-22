@@ -4,12 +4,13 @@
 # Mustafa Wasif Allvi, University of Potsdam, M.Sc. Data Science
 # ============================================================
 # Simple reference points and consistency checks for the detection
-# results of 13_event_level_evaluation.py. Nothing is retrained.
+# results of 13_event_level_evaluation.py (first configuration, models in
+# results/models). Nothing is retrained.
 #
 #   A. Macro-F1 conventions. The output vocabulary has 37 activity
 #      classes, the test targets contain fewer. Macro-F1 is computed
 #      (1) over the classes that occur in the test targets or
-#      predictions (the value reported so far) and (2) over all 37.
+#      predictions (the convention used in the thesis) and (2) over all 37.
 #   B. Single-run detection metrics. 13_... averages the scores of
 #      the three runs of a model before it computes the metrics.
 #      Here every run is evaluated on its own.

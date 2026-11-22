@@ -1,6 +1,9 @@
 # ============================================================
 # 09_baseline.py
 # Non-deep baselines for ERP anomaly detection
+# Earlier, case-level evaluation, kept for reference. The thesis reports
+# both detectors from 13_event_level_evaluation.py, which uses the
+# settings of this script.
 #
 # Purpose: establish whether deep sequential modeling is
 # warranted, by scoring the same injected test partition with
@@ -11,8 +14,8 @@
 #   One-Class SVM     — boundary-based novelty detection
 #
 # Sequences are reduced to one feature vector per sequence by
-# averaging over real (non-padded) timesteps, which mirrors the
-# reconstruction target used by the autoencoder in 05b.
+# averaging over real (non-padded) timesteps. Padded steps are masked
+# in the same way as in the autoencoder score of 05b.
 #
 # Output: results/metrics/baseline_results.json
 # ============================================================
@@ -40,7 +43,7 @@ ANOMALY_TYPES = ["control_flow", "data", "resource", "temporal", "cross_entity"]
 # Sequence -> fixed-length feature vector
 # ------------------------------------------------------------
 def aggregate(sequences):
-    """Mean over real timesteps, as in the autoencoder target.
+    """Mean over real timesteps (padded steps masked as in the autoencoder score).
 
     A padded timestep is an all-zero row, so the mask below keeps
     exactly the positions that carry an observed event.

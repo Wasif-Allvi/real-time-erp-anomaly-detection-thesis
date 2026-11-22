@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 generate_plots.py
-Chapter 7 Figure Generator
+First version of the result figures (earlier case-level evaluation).
+Superseded by generate_plots_v2.py and kept for reference.
 Thesis: Deep Sequential Models for ERP Anomaly Detection
 Mustafa Wasif Allvi — University of Potsdam, M.Sc. Data Science, 2026
 
@@ -19,7 +20,6 @@ Figures 7.4 and 7.5 require model inference on the first run.
 Results are cached to results/figures/score_cache.npz for all subsequent runs.
 
 Run:
-  cd "C:\\Users\\wasif\\Desktop\\Thesis\\Thesis Code"
   python generate_plots.py
 """
 
@@ -360,7 +360,7 @@ def fig_lr_decay():
 
 # ══════════════════════════════════════════════════════════════
 # FIGURE 7.3 — Next-Activity Prediction Performance
-# Both panels now include prototype LSTM baseline reference
+# Both panels include the prototype LSTM baseline as reference
 # ══════════════════════════════════════════════════════════════
 def fig_pred_perf():
     print('Fig 7.3: Predictive Performance')

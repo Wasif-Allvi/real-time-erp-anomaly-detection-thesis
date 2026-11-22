@@ -22,7 +22,8 @@
 #              bound (DR4); accuracy in the labels, no accuracy axis
 #              for the autoencoder
 #
-# Requires: 10_significance.py and 13_event_level_evaluation.py to have run.
+# Requires: 10_significance.py and 13_event_level_evaluation.py to have run,
+# or 18_last_real_evaluation.py for --readout last_real.
 #
 # Two sets of classifiers exist (see 17_padding_robustness.py):
 #   python generate_plots_v2.py --readout last_real

@@ -3,16 +3,22 @@
 # Thesis: Deep Sequential Models for ERP Anomaly Detection
 # Mustafa Wasif Allvi — University of Potsdam, M.Sc. Data Science
 # ============================================================
-# Three neural architectures (thesis Section 5.3):
-#   - LSTMModel        (Section 5.3.1)
-#   - GRUModel         (Section 5.3.2)
-#   - TransformerModel (Section 5.3.3)
+# Three neural architectures (thesis Section 6.4):
+#   - LSTMModel        (Section 6.4.1)
+#   - GRUModel         (Section 6.4.2)
+#   - TransformerModel (Section 6.4.3)
+#
+# These classes are the first configuration (thesis Section 7.1.4):
+# they read their output at the last of the 26 padded positions, and
+# the Transformer uses no padding mask. The classifiers reported in
+# the thesis read their output at the last real event. They are
+# defined in 17_padding_robustness.py on top of these classes.
 #
 # Each model returns TWO outputs:
 #   1. logits        : (B, num_classes) — next-activity prediction
 #   2. reconstruction: (B, N_NUMERICAL) — numerical feature reconstruction
 #
-# Reconstruction head fix:
+# Reconstruction head (thesis Section 6.4.4):
 #   Output size is N_NUMERICAL (7), not input_dim (14)
 #   Sigmoid bounds output to [0,1] matching min-max scaled inputs
 #   This prevents MSE explosion from unbounded categorical integers
@@ -67,7 +73,7 @@ class ReconstructionHead(nn.Module):
 
 
 # ============================================================
-# LSTM Model (Section 5.3.1)
+# LSTM Model (Section 6.4.1)
 # ============================================================
 
 class LSTMModel(nn.Module):
@@ -103,7 +109,7 @@ class LSTMModel(nn.Module):
 
 
 # ============================================================
-# GRU Model (Section 5.3.2)
+# GRU Model (Section 6.4.2)
 # ============================================================
 
 class GRUModel(nn.Module):
@@ -139,7 +145,7 @@ class GRUModel(nn.Module):
 
 
 # ============================================================
-# Positional Encoding for Transformer (Section 5.3.3)
+# Positional Encoding for Transformer (Section 6.4.3)
 # ============================================================
 
 class PositionalEncoding(nn.Module):
@@ -169,14 +175,14 @@ class PositionalEncoding(nn.Module):
 
 
 # ============================================================
-# Transformer Model (Section 5.3.3)
+# Transformer Model (Section 6.4.3)
 # ============================================================
 
 class TransformerModel(nn.Module):
     """
     Transformer encoder with reconstruction head.
 
-    Reduces sequential ops from O(n) to O(1) per thesis Section 5.3.3.
+    Reduces sequential ops from O(n) to O(1) (thesis Section 6.4.3).
     O(n^2) parallel attention cost negligible for n <= 26.
 
     Forward returns:

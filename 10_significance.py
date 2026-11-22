@@ -1,6 +1,9 @@
 # ============================================================
 # 10_significance.py
 # Statistical significance of the architecture comparison
+# Run on the first configuration (results/models).
+# 18_last_real_evaluation.py repeats it for the classifiers
+# reported in the thesis.
 #
 # Purpose: test whether the accuracy differences between LSTM,
 # GRU and Transformer on the held-out test set are larger than

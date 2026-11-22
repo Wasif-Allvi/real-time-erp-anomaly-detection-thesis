@@ -3,7 +3,7 @@
 # Thesis: Deep Sequential Models for ERP Anomaly Detection
 # Mustafa Wasif Allvi — University of Potsdam, M.Sc. Data Science
 # ============================================================
-# Preprocessing pipeline (thesis Section 5.1).
+# Preprocessing pipeline (thesis Section 6.2).
 #
 # Split: Train 70% / Val 10% / Test 20% at case level
 # Leakage prevention: scaler fitted on TRAIN only

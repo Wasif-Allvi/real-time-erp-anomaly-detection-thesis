@@ -28,6 +28,8 @@
 #   results/models_last_real/<model>_run<r>.json  history and test metrics
 #   results/metrics/padding_robustness.json       summary
 #   results/metrics/padding_robustness_predictions.npz
+# In padding_robustness.json the key "main_study" denotes the first
+# configuration (read-out at position 26).
 #
 # Usage:
 #   python 17_padding_robustness.py --smoke     2-minute test, saves nothing

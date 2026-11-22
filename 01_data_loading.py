@@ -1,15 +1,15 @@
 # ============================================================
 # 01_data_loading.py
 # Thesis: Deep Sequential Models for ERP Anomaly Detection
+# Mustafa Wasif Allvi, University of Potsdam, M.Sc. Data Science
 # ============================================================
-# Stage 1 of the preprocessing pipeline (thesis Section 5.1).
+# Stage 1 of the preprocessing pipeline (thesis Section 6.2).
 # Loads both BPI Challenge 2020 XES files via pm4py, converts
 # each to a flat pandas DataFrame, adds a dataset_source label,
 # concatenates into one combined DataFrame, and saves it as
 # events_raw_combined.csv in results/preprocessed/.
 #
-# Run standalone:  python 01_data_loading.py
-# Or called from:  main.py -> load_raw_data()
+# Run:  python 01_data_loading.py
 # ============================================================
 
 import os
@@ -127,8 +127,7 @@ def load_raw_data(save: bool = True) -> pd.DataFrame:
     print()
 
     # --------------------------------------------------------
-    # Required column check — uses actual dataset column names
-    # confirmed from first run of this script
+    # Required column check
     # --------------------------------------------------------
     required_cols = [
         CASE_ID_COL,                          # case:concept:name

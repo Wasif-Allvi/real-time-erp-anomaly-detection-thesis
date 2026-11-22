@@ -3,17 +3,18 @@
 # Thesis: Deep Sequential Models for ERP Anomaly Detection
 # Mustafa Wasif Allvi — University of Potsdam, M.Sc. Data Science
 # ============================================================
-# Anomaly injection framework (thesis Section 5.5).
+# Anomaly injection framework (thesis Section 6.3).
 #
 # Injects five anomaly types into the TEST SET ONLY.
 # Training and validation sets remain 100% clean.
 #
-# Anomaly types (thesis Section 3.6):
-#   1. control_flow  — swap timestamps of two activities
-#   2. data          — multiply case:Amount by 10x for EMPLOYEE role
-#   3. resource      — assign EMPLOYEE role to an approval event
-#   4. temporal      — shift middle event timestamp back 25 hours
-#   5. cross_entity  — multiply case:Amount 5x to exceed permit budget
+# Anomaly types (thesis Section 3.7):
+#   1. control_flow  : swap the timestamps of Payment Handled and Request Payment
+#   2. data          : multiply case:Amount by 10 on the first EMPLOYEE event
+#   3. resource      : give the first approval event the EMPLOYEE role
+#   4. temporal      : shift the middle event 25 hours back in time
+#   5. cross_entity  : multiply case:Amount by 5 on every event of a case
+#                      that has a permit budget
 #
 # Injection rate: 10% of test cases
 # Output: test_injected.joblib with sequences, labels, types

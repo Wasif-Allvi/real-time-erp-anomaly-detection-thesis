@@ -16,6 +16,9 @@
 #   pair     one classifier and one autoencoder one after the other
 #   all      three classifier runs and three autoencoder runs
 #
+# Measured for the first configuration (results/models).
+# 18_last_real_evaluation.py measures the same combinations for the
+# classifiers reported in the thesis.
 # Nothing is retrained and no existing result file is changed.
 #
 # Output : results/metrics/ensemble_latency.json
